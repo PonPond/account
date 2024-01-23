@@ -1,207 +1,154 @@
 @extends('layouts.index')
 @section('content')
-
-
-<div class="col-lg-3">
-        <div class="card ">
-            <div class="card-header pb-0 p-3">
-                <div class="row">
-                    <div class="col-6 d-flex align-items-center">
-                        <h6 class="mb-0">เพิ่มข้อมูลลูกหนี้</h6>
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-3">
+                <div class="card mb-4">
+                    <div class="card-header pb-0">
+                        <h6>ข้อมูลลูกหนี้</h6>
                     </div>
+                    <div class="card-body">
 
+                        <form action="{{ route('debtors.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">ชื่อ-นามสกุล ลูกหนี้</label>
+                                <input type="text" class="form-control" name="debtors_name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">ที่อยู่ ลูกหนี้</label>
+                                <input type="text" class="form-control" name="debtors_address">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">เบอร์โทร ลูกหนี้</label>
+                                <input type="text" class="form-control" name="debtors_phone">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">ลิงค์รูปบัตรประชาชน ลูกหนี้</label>
+                                <input type="text" class="form-control" name="debtors_id_image">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">ชื่อ-นามสกุล ลูกหนี้</label>
+                                <input type="text" class="form-control" name="g_name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">ที่อยู่ ลูกหนี้</label>
+                                <input type="text" class="form-control" name="g_address">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">เบอร์โทร ลูกหนี้</label>
+                                <input type="text" class="form-control" name="g_phone">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">ลิงค์รูปบัตรประชาชน ลูกหนี้</label>
+                                <input type="text" class="form-control" name="g_id_image">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">ประเภทลูกหนี้</label>
+                                <select class="form-control" id="exampleFormControlSelect1" name="type">
+                                    <option value="รายวัน">รายวัน</option>
+                                    <option value="รายเดือน">รายเดือน</option>
+                                    <option value="รายปี">รายปี</option>
+
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">เปอร์เซ็น</label>
+                                <input type="text" class="form-control" name="per">
+                            </div>
+
+                            <button type="input" class="btn btn-success align-items-center">เพิ่มข้อมูลลูกหนี้</button>
+                        </form>
+
+                        @if (session('success'))
+                            <div class="alert alert-success" role="alert">
+                                <strong>สำเร็จ !</strong> เพิ่มข้อมูลลูกหนี้เรียบร้อย
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
-            <div class="card-body p-3 pb-0">
-
-                <form action="#" method="POST" enctype="multipart/form-data">
-                    <form id="post-form">
-                        @csrf
-                        <div class="row">
-
-                           
-
-                            <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="ชื่อลูกหนี้"  />
-                            </div>
-
-                            <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="ที่อยู่"  />
-                            </div>
-
-                            <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="เบอร์โทร"  />
-                            </div>
-
-                            <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="หลักฐานบัตรประชาชนหรืออื่นๆ"  />
-                            </div>
-
-                            <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="ชื่อคนค้ำประกัน"  />
-                            </div>
-
-                            <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="ที่อยู่คนค้ำประกัน"  />
-                            </div>
-
-                            <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="เบอร์โทรคนค้ำประกัน"  />
-                            </div>
-
-                            <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="หลักฐานบัตรประชาชนหรืออื่นๆ สำหรับคนค้ำประกัน"  />
-                            </div>
-
-                            <div class="mb-3">
-  
-                            <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-                            <option selected>ประเภทการยืม</option>
-                            <option value="1">รายวัน</option>
-                            <option value="2">รายเดือน</option>
-                            <option value="3">รายปี</option>
-                            </select>
-
-                            </div>
 
 
 
-                            <button type="input" class="btn btn-primary">เพิ่มข้อมูล</button>
 
-                            
+            <div class="col-9">
+                <div class="card mb-4">
+                    <div class="card-header pb-0">
+                        <h6>ข้อมูลลูกหนี้ทั้งหมด</h6>
+                    </div>
+                    <div class="card-body px-0 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-uppercase  text-md font-weight-bolder opacity-7">ชื่อ-ที่อยู่</th>
+                                        <th class="text-uppercase  text-md font-weight-bolder opacity-7">เบอร์โทร</th>
+                                        <th class="text-uppercase  text-md font-weight-bolder opacity-7">หลักฐาน</th>
+                                        <th class="text-uppercase  text-md font-weight-bolder opacity-7">ประเภท</th>
+                                        <th class=" opacity-7"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($debtor as $item)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex px-2 py-1">
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-md">{{ $item->debtors_name }}</h6>
+                                                        <p class="text-xs text-secondary mb-0">{{ $item->debtors_address }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <h6 class="mb-0 text-md">{{ $item->debtors_phone }}</h6>
+                                            </td>
+
+                                            <td>
+                                                <h6 class="mb-0 text-md">{{ $item->debtors_id_image }}</h6>
+                                            </td>
+
+                                            <td>
+                                                @if ($item->type == 'รายวัน')
+                                                    <span class="badge bg-gradient-warning">รายวัน</span>
+                                                @endif
+
+                                                @if ($item->type == 'รายเดือน')
+                                                    <span class="badge bg-gradient-success">รายเดือน</span>
+                                                @endif
+
+                                                @if ($item->type == 'รายปี')
+                                                    <span class="badge bg-gradient-info">รายปี</span>
+                                                @endif
+                                            </td>
+
+                                            <td class="align-middle">
+                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
+                                                    data-toggle="tooltip" data-original-title="Edit user">
+                                                    Edit
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
-
-                    </form>
+                    </div>
+                </div>
             </div>
+
         </div>
-        </div>
-
-
-
-<div class="col-lg-9 mb-4 ">
-<div class="table-responsive">
-  <table class="table table-dark">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>ชื่อ</th>
-        <th>เบอร์โทร</th>
-        <th>ที่อยู่</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <span class="fw-medium">Angular Project</span></td>
-        <td>Albert Cook</td>
-        <td>
-          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Lilian Fuller">
-             
-            </li>
-            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-             
-            </li>
-            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Christina Parker">
-             
-            </li>
-          </ul>
-        </td>
-        <td><span class="badge bg-label-primary me-1">Active</span></td>
-        <td>
-          <div class="dropdown">
-            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>Edit</a>
-              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>Delete</a>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td><i class="fab fa-react fa-lg text-info me-3"></i> <span class="fw-medium">React Project</span></td>
-        <td>Barry Hunter</td>
-        <td>
-          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Lilian Fuller">
-            
-            </li>
-            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-            
-            </li>
-            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Christina Parker">
-             
-            </li>
-          </ul>
-        </td>
-        <td><span class="badge bg-label-success me-1">Completed</span></td>
-        <td>
-          <div class="dropdown">
-            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>Edit</a>
-              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>Delete</a>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <span class="fw-medium">VueJs Project</span></td>
-        <td>Trevor Baker</td>
-        <td>
-          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Lilian Fuller">
-             
-            </li>
-            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-           
-            </li>
-            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Christina Parker">
-             
-            </li>
-          </ul>
-        </td>
-        <td><span class="badge bg-label-info me-1">Scheduled</span></td>
-        <td>
-          <div class="dropdown">
-            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>Edit</a>
-              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>Delete</a>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td><i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <span class="fw-medium">Bootstrap Project</span></td>
-        <td>Jerry Milton</td>
-        <td>
-          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Lilian Fuller">
-            
-            </li>
-            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-            
-            </li>
-            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Christina Parker">
-            
-            </li>
-          </ul>
-        </td>
-        <td><span class="badge bg-label-warning me-1">Pending</span></td>
-        <td>
-          <div class="dropdown">
-            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>Edit</a>
-              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>Delete</a>
-            </div>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
+    </div>
 @endsection
-

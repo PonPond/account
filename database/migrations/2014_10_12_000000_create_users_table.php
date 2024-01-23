@@ -23,22 +23,71 @@ return new class extends Migration
             $table->timestamps();
         });
 
+       
+
+
         Schema::create('debtors', function (Blueprint $table) {
             $table->id();
             $table->string('debtors_name');
             $table->string('debtors_address');
             $table->string('debtors_phone');
             $table->string('debtors_id_image');
-
             $table->string('g_name')->nullable();
             $table->string('g_address')->nullable();
             $table->string('g_phone')->nullable();
             $table->string('g_id_image')->nullable();
-         
             $table->string('type');
-
+            $table->string('per');
+            $table->string('total_debts')->default(0)->nullable();
             $table->timestamps();
         });
+
+
+        Schema::create('debt_rounds', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('debt_id');
+            $table->decimal('round_amount', 10, 2)->default(0);
+            $table->timestamps();
+            $table->foreign('debt_id')->references('id')->on('debtors')->onDelete('cascade');
+        });
+
+        
+
+        Schema::create('orders', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('debt_id')->nullable();
+            $table->unsignedBigInteger('debt_rounds_id')->nullable();
+            $table->date('end_date');
+            $table->decimal('total_price', 10, 2);
+            $table->decimal('amount', 10, 2)->default(0);
+            $table->timestamps();
+            $table->foreign('debt_id')->references('id')->on('debtors')->nullable();
+            $table->foreign('debt_rounds_id')->references('id')->on('debt_rounds')->nullable();
+     
+        });
+
+        Schema::create('payments', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('debt_id');
+            $table->unsignedBigInteger('debt_rounds_id')->nullable();
+            $table->decimal('amount', 10, 2);
+            $table->timestamps();
+            $table->foreign('debt_id')->references('id')->on('debtors')->onDelete('cascade');
+            $table->foreign('debt_rounds_id')->references('id')->on('debt_rounds')->nullable();
+        });
+
+        Schema::create('summarys', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('debt_id');
+            $table->unsignedBigInteger('debt_rounds_id')->nullable();
+            $table->decimal('amount', 10, 2);
+            $table->decimal('amount_d', 10, 2);
+            $table->timestamps();
+            $table->foreign('debt_id')->references('id')->on('debtors')->onDelete('cascade');
+            $table->foreign('debt_rounds_id')->references('id')->on('debt_rounds')->nullable();
+        });
+
+        
 
     }
 
