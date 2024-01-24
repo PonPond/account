@@ -135,6 +135,8 @@
                                         value="{{ $deb5->id }}">
                                     <input type="hidden" class="form-control" name="debt_id"
                                         value="{{ $deb5->debt_id }}">
+                                    <input type="hidden" class="form-control" id="exampleFormControlInput1"
+                                        name="amount_d" value="{{ $totalint }}">
                                     <button type="button" class="btn bg-gradient-secondary"
                                         data-bs-dismiss="modal">Close</button>
                                     <button type="submit" class="btn bg-gradient-primary">Save changes</button>
@@ -155,7 +157,7 @@
                             <tr>
 
                                 <th class="text-center">วันที่จ่าย</th>
-                                <th class="text-center">จำนวนเงิน</th>
+                                <th class="text-center">ยอดเงินรวม</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -168,6 +170,7 @@
                                     <td class="text-center">
                                         <h6 class="mb-0 text-md">{{ $item->amount }}</h6>
                                     </td>
+
 
 
                                 </tr>
@@ -257,10 +260,11 @@
 
                                 <th class="text-center">วันที่จ่าย</th>
                                 <th class="text-center">จำนวนเงิน</th>
+                                <th class="text-center">ดอกเบี้ย</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($deb2 as $item)
+                            @foreach ($deb7 as $item)
                                 <tr>
                                     <td class="text-center">
                                         <h6 class="mb-0 text-md">{{ $ThaiFormat->makeFormat2($item->created_at) }}</h6>
@@ -270,7 +274,9 @@
                                         <h6 class="mb-0 text-md">{{ $item->amount }}</h6>
                                     </td>
 
-
+                                    <td class="text-center">
+                                        <h6 class="mb-0 text-md">{{ $item->amount_d }}</h6>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

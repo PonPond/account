@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Debtor;
 use App\Models\Payments;
 use App\Models\Orders;
+use App\Models\Summarys;
 use App\Models\debt_rounds;
 use Carbon\Carbon;
 
@@ -45,7 +46,11 @@ class DebtorMController extends Controller
         ->where('debt_rounds_id', '=', $deb5->id)
         ->get();
 
-
+        $deb7 = Summarys::where('debt_id', $deb5->debt_id)
+        ->where('debt_rounds_id', '=', $deb5->id)
+        ->orderBy('created_at', 'desc') 
+        ->get();
+      
 
         if (!empty($deb3[0])) {
             $result = $this->calculateRemainingPeriods($deb3[0]->end_date);
@@ -74,7 +79,7 @@ class DebtorMController extends Controller
         }
         
 
-        return view('page.debtorM.finddeb', compact('deb1','deb2','deb3','deb4','deb5','deb6','fullM','fullD','per','day','fullper','rday','totalint'));
+        return view('page.debtorM.finddeb', compact('deb1','deb2','deb3','deb4','deb5','deb6','deb7','fullM','fullD','per','day','fullper','rday','totalint'));
     }
 
     
@@ -108,11 +113,24 @@ class DebtorMController extends Controller
     $findDeb = Debtor::find($debtorId);
     $order = Orders::find($orderId);
 
+    
     if (!$findDeb || !$order) {
         return null;
     }
 
-    $startDate = Carbon::parse($order->created_at);
+    if($order->amount == 0){
+        $startDate = Carbon::parse($order->created_at);
+    }else{
+
+        $summary = Summarys::where('debt_id', $findDeb->id)
+        ->where('debt_rounds_id', '=', $order->debt_rounds_id)
+        ->orderBy('created_at', 'desc') 
+        ->first();
+        $startDate = Carbon::parse($summary->created_at);
+    }
+
+
+
     $now = Carbon::now();
     $daysPassed = $now->diffInDays($startDate);
     $principalAmount = $order->total_price;
@@ -130,5 +148,9 @@ class DebtorMController extends Controller
         'totalInterest' => $totalInterest,
     ];
 }
+
+
+
+
     
 }
