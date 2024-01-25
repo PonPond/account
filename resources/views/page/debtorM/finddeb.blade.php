@@ -157,7 +157,7 @@
                             <tr>
 
                                 <th class="text-center">วันที่จ่าย</th>
-                                <th class="text-center">ยอดเงินรวม</th>
+                                <th class="text-center">ยอดเงิน</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -172,13 +172,15 @@
                                     </td>
 
 
-
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
+
+                    <h5 style="margin-left: 60%">รวม: {{ $totalsum }} บาท</h5>
                 </div>
             </div>
+
         </div>
     </div>
 
@@ -206,6 +208,26 @@
                         จำนวนเงินดอกเบี้ยคิดรายวัน : {{ $rday }} บาท
                         <br>
                         จำนวนเงินรวมของดอกเบี้ย : {{ $totalint }} บาท
+                    </div>
+                </div>
+
+                <br>
+                <div class="row">
+                    <div class="col-6">
+
+                        @if ($deb8)
+                            <h4>จำนวนเงินต้นติดค้างคงเหลือ: {{ $deb8->amount }} บาท</h4>
+                        @else
+                            <h4>ไม่พบข้อมูลเงินต้นติดค้าง</h4>
+                        @endif
+                        <br>
+
+
+                    </div>
+                    <div class="col-6">
+                        <h4>จำนวนดอกเบี้ยติดค้างคงเหลือ: {{ $totalAmountD }}</h4>
+                        <br>
+
                     </div>
 
 

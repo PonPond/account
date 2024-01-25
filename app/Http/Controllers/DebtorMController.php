@@ -39,6 +39,13 @@ class DebtorMController extends Controller
         $deb3 = Orders::where('debt_id', $deb5->debt_id)
         ->where('debt_rounds_id', '=', $deb5->id)
         ->get();
+       
+        $deb8 = Orders::where('debt_id', $deb5->debt_id)
+        ->where('debt_rounds_id', '=', $deb5->id)
+        ->first();
+
+   
+
         $deb4= debt_rounds::where('debt_id',$id)->get();
         $deb6 = Debtor::where('id', $deb5->debt_id)->first();
        
@@ -46,11 +53,15 @@ class DebtorMController extends Controller
         ->where('debt_rounds_id', '=', $deb5->id)
         ->get();
 
+        $totalsum = $deb2->sum('amount');
+       
+
         $deb7 = Summarys::where('debt_id', $deb5->debt_id)
         ->where('debt_rounds_id', '=', $deb5->id)
         ->orderBy('created_at', 'desc') 
         ->get();
       
+        $totalAmountD = $deb7->sum('amount_d');
 
         if (!empty($deb3[0])) {
             $result = $this->calculateRemainingPeriods($deb3[0]->end_date);
@@ -79,7 +90,7 @@ class DebtorMController extends Controller
         }
         
 
-        return view('page.debtorM.finddeb', compact('deb1','deb2','deb3','deb4','deb5','deb6','deb7','fullM','fullD','per','day','fullper','rday','totalint'));
+        return view('page.debtorM.finddeb', compact('deb1','deb2','deb3','deb4','deb5','deb6','deb7','deb8','totalAmountD','fullM','fullD','per','day','fullper','rday','totalint','totalsum'));
     }
 
     
@@ -126,6 +137,7 @@ class DebtorMController extends Controller
         ->where('debt_rounds_id', '=', $order->debt_rounds_id)
         ->orderBy('created_at', 'desc') 
         ->first();
+
         $startDate = Carbon::parse($summary->created_at);
     }
 
@@ -133,7 +145,21 @@ class DebtorMController extends Controller
 
     $now = Carbon::now();
     $daysPassed = $now->diffInDays($startDate);
-    $principalAmount = $order->total_price;
+
+    $summary = Summarys::where('debt_id', $findDeb->id)
+    ->where('debt_rounds_id', '=', $order->debt_rounds_id)
+    ->orderBy('created_at', 'desc') 
+    ->first();
+
+    if($summary !== null){
+ 
+        $principalAmount =$order->amount;
+    }else{
+        $principalAmount = $order->total_price;
+    }
+
+   
+
     $interestRate = $findDeb->per;
     $numberOfFullPeriods = floor($daysPassed / 30);
     $remainingDays = $daysPassed % 30;
