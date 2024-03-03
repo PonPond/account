@@ -14,14 +14,14 @@ class Debtor extends Model
         'debtors_address',
         'debtors_phone',
         'debtors_id_image',
-
-        'g_name',
-        'g_address',
-        'g_phone',
-        'g_id_image',
-
         'type',
         'per',
         'total_debts',
     ];
 }
+
+
+// 'g_name',
+// 'g_address',
+// 'g_phone',
+// 'g_id_image',

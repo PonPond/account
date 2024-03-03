@@ -34,8 +34,8 @@ class OrderController extends Controller
 
     public function storeround(Request $request)
     {
-      
         $tableName = new debt_rounds();
+        $tableName->title = $request->title;
         $tableName->debt_id = $request->debt_id;
         $tableName->save();
 

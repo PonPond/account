@@ -32,25 +32,6 @@
                             </div>
 
 
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">ชื่อ-นามสกุล ลูกหนี้</label>
-                                <input type="text" class="form-control" name="g_name">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">ที่อยู่ ลูกหนี้</label>
-                                <input type="text" class="form-control" name="g_address">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">เบอร์โทร ลูกหนี้</label>
-                                <input type="text" class="form-control" name="g_phone">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">ลิงค์รูปบัตรประชาชน ลูกหนี้</label>
-                                <input type="text" class="form-control" name="g_id_image">
-                            </div>
 
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">ประเภทลูกหนี้</label>

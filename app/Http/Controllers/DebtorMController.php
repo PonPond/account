@@ -9,13 +9,15 @@ use App\Models\Orders;
 use App\Models\Summarys;
 use App\Models\debt_rounds;
 use Carbon\Carbon;
+use Phattarachai\LineNotify\Facade\Line;
 
 class DebtorMController extends Controller
 {
     public function index()
     {
         $debtor = Debtor::where('type',"รายเดือน")->get();
-      
+        Line::send('ทดสอบ');
+
         return view('page.debtorM.index',compact('debtor'));
     }
 
@@ -88,8 +90,8 @@ class DebtorMController extends Controller
             $rday = null;
             $totalint = null;
         }
+      
         
-
         return view('page.debtorM.finddeb', compact('deb1','deb2','deb3','deb4','deb5','deb6','deb7','deb8','totalAmountD','fullM','fullD','per','day','fullper','rday','totalint','totalsum'));
     }
 
@@ -121,6 +123,7 @@ class DebtorMController extends Controller
 
     protected function calculateInterestAndDays($debtorId, $orderId)
     {
+
     $findDeb = Debtor::find($debtorId);
     $order = Orders::find($orderId);
 
@@ -130,14 +133,15 @@ class DebtorMController extends Controller
     }
 
     if($order->amount == 0){
+       
         $startDate = Carbon::parse($order->created_at);
     }else{
-
+      
         $summary = Summarys::where('debt_id', $findDeb->id)
         ->where('debt_rounds_id', '=', $order->debt_rounds_id)
         ->orderBy('created_at', 'desc') 
         ->first();
-
+       
         $startDate = Carbon::parse($summary->created_at);
     }
 
@@ -163,8 +167,10 @@ class DebtorMController extends Controller
     $interestRate = $findDeb->per;
     $numberOfFullPeriods = floor($daysPassed / 30);
     $remainingDays = $daysPassed % 30;
+    
     $interestInFullPeriods = $principalAmount * ($interestRate / 100) * $numberOfFullPeriods;
     $interestInRemainingDays = $principalAmount * ($interestRate / 100) * ($remainingDays / 30);
+  
     $totalInterest = $interestInFullPeriods + $interestInRemainingDays;
 
     return [

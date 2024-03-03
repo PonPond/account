@@ -32,13 +32,20 @@ return new class extends Migration
             $table->string('debtors_address');
             $table->string('debtors_phone');
             $table->string('debtors_id_image');
+            $table->string('type');
+            $table->string('per');
+            $table->string('total_debts')->default(0)->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('g_debtors', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('debt_id');
             $table->string('g_name')->nullable();
             $table->string('g_address')->nullable();
             $table->string('g_phone')->nullable();
             $table->string('g_id_image')->nullable();
-            $table->string('type');
-            $table->string('per');
-            $table->string('total_debts')->default(0)->nullable();
+            $table->foreign('debt_id')->references('id')->on('debtors')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -46,6 +53,7 @@ return new class extends Migration
         Schema::create('debt_rounds', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('debt_id');
+            $table->string('title')->nullable();
             $table->decimal('round_amount', 10, 2)->default(0);
             $table->timestamps();
             $table->foreign('debt_id')->references('id')->on('debtors')->onDelete('cascade');

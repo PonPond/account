@@ -11,6 +11,7 @@ class debt_rounds extends Model
 
     protected $fillable = [
         'debt_id',
+        'title',
         'round_amount',
     ];
 }
