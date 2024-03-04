@@ -25,6 +25,7 @@ Route::middleware([
 
     Route::get('/debtor', [DebtorController::class, 'index'])->name('debtor.index');
     Route::post('/debtors/store', [DebtorController::class, 'store'])->name('debtors.store');
+    Route::post('/debtors/storeg', [DebtorController::class, 'storeg'])->name('deb.storeg');
 
 
     Route::get('/debtor-m', [DebtorMController::class, 'index'])->name('debtorm.index');

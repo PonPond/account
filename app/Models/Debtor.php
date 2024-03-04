@@ -18,10 +18,12 @@ class Debtor extends Model
         'per',
         'total_debts',
     ];
+
+    public function debg()
+    {
+    return $this->hasMany(g_debtors::class, 'debt_id', 'id');
+    }
 }
 
 
-// 'g_name',
-// 'g_address',
-// 'g_phone',
-// 'g_id_image',
+

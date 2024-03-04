@@ -16,7 +16,7 @@ class DebtorMController extends Controller
     public function index()
     {
         $debtor = Debtor::where('type',"รายเดือน")->get();
-        Line::send('ทดสอบ');
+        // Line::send('ทดสอบ');
 
         return view('page.debtorM.index',compact('debtor'));
     }
