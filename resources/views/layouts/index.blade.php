@@ -43,7 +43,7 @@
             <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html "
                 target="_blank">
 
-                <span class="ms-1 font-weight-bold">Argon Dashboard 2</span>
+                <span class="ms-1 font-weight-bold">Account Management</span>
             </a>
         </div>
         <hr class="horizontal dark mt-0">
@@ -125,9 +125,23 @@
             </ul>
         </div>
         <div class="sidenav-footer mx-3 ">
+            <div class="card card-plain shadow-none" id="sidenavCard">
 
-            <a href="https://www.creative-tim.com/learning-lab/bootstrap/license/argon-dashboard" target="_blank"
-                class="btn btn-dark btn-sm w-100 mb-3">Documentation</a>
+                <div class="card-body text-center p-3 w-100 pt-9">
+                    <div class="docs-info">
+
+
+                    </div>
+                </div>
+            </div>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <a class=" btn btn-primary btn-sm mb-0 w-100  " href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+            this.closest('form').submit();">
+                    ออกจากระบบ
+                </a>
+            </form>
 
         </div>
     </aside>

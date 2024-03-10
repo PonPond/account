@@ -16,6 +16,11 @@ class OrderController extends Controller
         $tableName->end_date = $request->end_date;
         $tableName->total_price = $request->total_price;
         $tableName->debt_rounds_id = $request->debt_rounds_id;
+        $tableName->debt_rounds_id = $request->debt_rounds_id;
+        $tableName->created_at = $request->created_date;
+     
+        
+      
         $tableName->save();
 
 

@@ -45,4 +45,20 @@ class DebtorController extends Controller
         return redirect()->route('debtor.index')->with('success', "บันทึกข้อมูลเรียบร้อย");
 
     }
+
+    public function delete($g_id)
+    {
+        //ลบข้อมูล
+        $delete = g_debtors::find($g_id)->delete();
+        return redirect()->back()->with('delete', "ลบเรียบร้อยแล้ว");
+
+    }
+
+    public function deleteb($id)
+    {
+        //ลบข้อมูล
+        $delete = Debtor::find($id)->delete();
+        return redirect()->back()->with('delete', "ลบเรียบร้อยแล้ว");
+
+    }
 }

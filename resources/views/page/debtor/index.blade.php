@@ -56,6 +56,12 @@
                                 <strong>สำเร็จ !</strong> เพิ่มข้อมูลเรียบร้อย
                             </div>
                         @endif
+
+                        @if (session('delete'))
+                            <div class="alert alert-danger" role="alert">
+                                <strong>สำเร็จ !</strong> ลบข้อมูลเรียบร้อย
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -228,6 +234,10 @@
                                                     <i class="fas fa-folder-open"></i>
                                                 </button>
 
+                                                <a href="{{ url('/debtors/delete/' . $item->id) }}"
+                                                    class=" btn btn-danger" onclick="return confirm('ลบหรือไม่ ?')">
+                                                    ลบข้อมูล</a>
+
                                                 <div class="modal fade" id="exampleModal2{{ $item->id }}"
                                                     tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                                     aria-hidden="true">
@@ -236,10 +246,7 @@
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="exampleModalLabel">
                                                                     ข้อมูลคนค้ำประกัน </h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
+
                                                             </div>
                                                             <div class="modal-body">
                                                                 <ul class="list-group">
@@ -272,11 +279,16 @@
                                                                                             target="_blank">ลิงค์รูปบัตรประชาชน</a></span>
                                                                             </span>
                                     @endforeach
-
                         </div>
                         <div class="ms-auto text-end">
-                            <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i
-                                    class="far fa-trash-alt me-2"></i>Delete</a>
+                            @foreach ($item->debg as $item1)
+                                <a class="btn btn-link text-danger text-gradient px-3 mb-0"
+                                    onclick="return confirm('ลบหรือไม่ ?')"
+                                    href="{{ url('/debtors/storeg/' . $item1->id) }}"><i
+                                        class="far fa-trash-alt me-2"></i>Delete</a>
+                            @endforeach
+
+
                         </div>
                         </li>
 

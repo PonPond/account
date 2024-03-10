@@ -13,7 +13,9 @@ class Orders extends Model
         'end_date',
         'total_price',
         'amount',
-        'debt_rounds_id'
+        'debt_rounds_id',
+        'created_at',
+       
     ];
   
     use HasFactory;

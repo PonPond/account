@@ -26,11 +26,15 @@ Route::middleware([
     Route::get('/debtor', [DebtorController::class, 'index'])->name('debtor.index');
     Route::post('/debtors/store', [DebtorController::class, 'store'])->name('debtors.store');
     Route::post('/debtors/storeg', [DebtorController::class, 'storeg'])->name('deb.storeg');
+    Route::get('/debtors/storeg/{id}', [DebtorController::class, 'delete']);
+    Route::get('/debtors/delete/{id}', [DebtorController::class, 'deleteb']);
 
 
+    
     Route::get('/debtor-m', [DebtorMController::class, 'index'])->name('debtorm.index');
     Route::get('/debtors-m/{id}', [DebtorMController::class, 'read']);
     Route::get('/debtors-m/round/{id}', [DebtorMController::class, 'readdeb']);
+    Route::get('/debtors-m/delete/{id}', [DebtorMController::class, 'delete']);
 
     
     Route::post('/debtors-m/store/round', [OrderController::class, 'storeround'])->name('debtorsM.storeround');

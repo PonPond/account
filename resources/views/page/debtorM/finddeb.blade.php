@@ -34,6 +34,12 @@
                                     </div>
 
                                     <div class="form-group">
+                                        <label for="example-date-input" class="form-control-label">วันที่เริ่ม</label>
+                                        <input class="form-control" type="date" name="created_date">
+                                    </div>
+
+
+                                    <div class="form-group">
                                         <label for="example-date-input" class="form-control-label">วันครบกำหนด</label>
                                         <input class="form-control" type="date" name="end_date">
                                     </div>
@@ -189,11 +195,6 @@
         <div class="card mb-4">
             <div class="card-header pb-0">
                 <h6>สรุปยอดรวม</h6>
-
-                <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal2">
-                    อัปเดทรายการ
-                </button>
 
                 <br>
                 <div class="row">

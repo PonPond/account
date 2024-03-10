@@ -31,6 +31,13 @@ class DebtorMController extends Controller
         return view('page.debtorM.find', compact('deb1','deb2','deb3','deb4'));
     }
 
+    public function delete($id)
+    {
+        //ลบข้อมูล
+        $delete = debt_rounds::find($id)->delete();
+        return redirect()->back()->with('delete', "ลบเรียบร้อยแล้ว");
+
+    }
     public function readdeb($id)
     {
         

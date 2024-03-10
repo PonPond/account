@@ -68,7 +68,8 @@ return new class extends Migration
             $table->date('end_date');
             $table->decimal('total_price', 10, 2);
             $table->decimal('amount', 10, 2)->default(0);
-            $table->timestamps();
+            $table->datetime('created_at');
+            $table->datetime('updated_at')->default(null);
             $table->foreign('debt_id')->references('id')->on('debtors')->nullable();
             $table->foreign('debt_rounds_id')->references('id')->on('debt_rounds')->nullable();
      

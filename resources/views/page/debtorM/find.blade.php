@@ -55,20 +55,29 @@
 
                             @foreach ($deb4 as $item)
                                 <div class="col-md-6 mb-3">
-                                    <div
-                                        class="card card-body border card-plain border-radius-lg d-flex align-items-center flex-row">
+                                    <div class="card card-body border card-plain border-radius-lg d-flex  flex-row">
                                         <img class="w-10 me-3 mb-0" src="../assets/img/logos/month.png" alt="logo">
+
+
                                         <div class="div">
                                             <h6 class="mb-0"> วันที่ทำรายการ:
                                                 {{ $ThaiFormat->makeFormat2($item->created_at) }}</h6>
 
                                             <h6 class="mb-0"> หมายเหตุ: {{ $item->title }}</h6>
                                         </div>
-                                        <a href="{{ url('/debtors-m/round/' . $item->id) }}"
-                                            class="fas fa-pencil-alt ms-auto text-dark cursor-pointer"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title="จัดการหนี้">
+                                        <div class="div" style="margin-left: 50%">
+                                            <a href="{{ url('/debtors-m/round/' . $item->id) }}"
+                                                class="fas fa-pencil-alt ms-auto text-dark cursor-pointer"
+                                                data-bs-toggle="tooltip" data-bs-placement="top" title="จัดการหนี้">
+                                            </a>
 
-                                        </a>
+                                            <a href="{{ url('/debtors-m/delete/' . $item->id) }}"
+                                                class="fas fa-minus ms-auto text-dark cursor-pointer"
+                                                onclick="return confirm('ลบหรือไม่ ?')" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="ลบข้อมูล">
+                                            </a>
+                                        </div>
+
                                     </div>
 
 
