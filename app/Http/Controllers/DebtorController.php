@@ -18,6 +18,26 @@ class DebtorController extends Controller
 
     public function store(Request $request)
     {
+
+        $request->validate([
+            'debtors_name' => 'required',
+            'debtors_address' => 'required',
+            'debtors_phone' => 'required',
+            'debtors_id_image' => 'required',
+            'type' => 'required',
+            'per' => 'required',
+        ],
+            [
+                'debtors_name.required' => "ชื่อ-นามสกุล ลูกหนี้",
+                'debtors_address.required' => "ที่อยู่ ลูกหนี้",
+                'debtors_phone.required' => "เบอร์โทร ลูกหนี้",
+                'debtors_id_image.required' => "ลิงค์รูปบัตรประชาชน ลูกหนี้",
+                'type.required' => "ประเภทลูกหนี้",
+                'per.required' => "เปอร์เซ็น",
+            ],
+
+        );
+
         $tableName = new Debtor();
         $tableName->debtors_name = $request->debtors_name;
         $tableName->debtors_address = $request->debtors_address;

@@ -48,6 +48,43 @@
                                 <input type="text" class="form-control" name="per">
                             </div>
 
+                            @error('debtors_name')
+                                <div class="my-2">
+                                    <span class="text-danger my-2"> {{ $message }} </span>
+                                </div>
+                            @enderror
+
+                            @error('debtors_address')
+                                <div class="my-2">
+                                    <span class="text-danger my-2"> {{ $message }} </span>
+                                </div>
+                            @enderror
+
+                            @error('debtors_phone')
+                                <div class="my-2">
+                                    <span class="text-danger my-2"> {{ $message }} </span>
+                                </div>
+                            @enderror
+
+                            @error('debtors_id_image')
+                                <div class="my-2">
+                                    <span class="text-danger my-2"> {{ $message }} </span>
+                                </div>
+                            @enderror
+
+
+                            @error('type')
+                                <div class="my-2">
+                                    <span class="text-danger my-2"> {{ $message }} </span>
+                                </div>
+                            @enderror
+
+                            @error('per')
+                                <div class="my-2">
+                                    <span class="text-danger my-2"> {{ $message }} </span>
+                                </div>
+                            @enderror
+
                             <button type="input" class="btn btn-success align-items-center">เพิ่มข้อมูลลูกหนี้</button>
                         </form>
 
@@ -144,26 +181,11 @@
                                                         <i class="fas fa-user-plus"></i>
                                                     </button>
                                                 @endif
-                                                {{-- 
 
-                                                @foreach ($item->debg as $item1)
-                                                    @if ($item1->debt_id == $item->id)
-                                                        <button type="button" class="btn btn-outline-secondary"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal1{{ $item->id }}">
-                                                            <i class="fas fa-user-plus"></i>
-                                                        </button>
-                                                    @else
-                                                        <button type="button" class="btn btn-outline-secondary"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModal1{{ $item->id }}" disabled>
-                                                            <i class="fas fa-user-plus"></i>
-                                                        </button>
-                                                    @endif
-                                                @endforeach --}}
 
-                                                <div class="modal fade" id="exampleModal1{{ $item->id }}" tabindex="-1"
-                                                    role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="exampleModal1{{ $item->id }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
