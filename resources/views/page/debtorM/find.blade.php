@@ -71,11 +71,12 @@
                                                 data-bs-toggle="tooltip" data-bs-placement="top" title="จัดการหนี้">
                                             </a>
 
-                                            <a href="{{ url('/debtors-m/delete/' . $item->id) }}"
+                                            <a href="{{ url('/debtors-m/update/' . $item->id) }}"
                                                 class="fas fa-minus ms-auto text-dark cursor-pointer"
                                                 onclick="return confirm('ลบหรือไม่ ?')" data-bs-toggle="tooltip"
                                                 data-bs-placement="top" title="ลบข้อมูล">
                                             </a>
+
                                         </div>
 
                                     </div>

@@ -119,6 +119,8 @@
                                         <th class="text-uppercase  text-md font-weight-bolder opacity-7">ชื่อ-ที่อยู่</th>
                                         <th class="text-uppercase  text-md font-weight-bolder opacity-7 text-center">
                                             เบอร์โทร</th>
+                                        <th class="text-uppercase  text-md font-weight-bolder opacity-7 text-center">
+                                            ดอกเบี้ย/เปอร์เซ็น</th>
                                         <th class="text-uppercase  text-md font-weight-bolder opacity-7 text-center">ประเภท
                                         </th>
                                         <th class="text-uppercase  text-md font-weight-bolder opacity-7 text-center">
@@ -133,14 +135,17 @@
                                                 <div class="d-flex px-2 py-1">
                                                     <div class="d-flex flex-column justify-content-center">
                                                         <h6 class="mb-0 text-md">{{ $item->debtors_name }}</h6>
-                                                        <p class="text-xs text-secondary mb-0">{{ $item->debtors_address }}
-                                                        </p>
+                                                        <h6 class="text-md text-dark mb-0">{{ $item->debtors_address }}
+                                                        </h6>
                                                     </div>
                                                 </div>
                                             </td>
 
                                             <td class="text-center">
                                                 <h6 class="mb-0 text-md">{{ $item->debtors_phone }}</h6>
+                                            </td class="text-center">
+                                            <td class="text-center">
+                                                <h6 class="mb-0 text-md">{{ $item->per }} %</h6>
                                             </td class="text-center">
 
 
@@ -160,12 +165,21 @@
 
                                             <td class="text-center">
 
+
+                                                <button type="button" class="btn btn-outline-secondary"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModalEdit{{ $item->id }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+
                                                 @php
                                                     $debtIds = [];
                                                     foreach ($item->debg as $item1) {
                                                         $debtIds[] = $item1->debt_id;
                                                     }
                                                 @endphp
+
+
 
                                                 @if (!empty($debtIds) && $debtIds[0] == $item->id)
                                                     <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
@@ -249,12 +263,91 @@
                                                 </div>
 
 
+                                                <div class="modal fade" id="exampleModalEdit{{ $item->id }}"
+                                                    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                                    แก้ไขข้อมูลลูกหนี้ </h5>
+
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <form action="{{ url('/debtors/update/' . $item->id) }}"
+                                                                    method="POST" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    <div class="form-group">
+                                                                        <label for="exampleFormControlInput1">ชื่อ-นามสกุล
+                                                                        </label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="debtors_name"
+                                                                            style="color: black; font-weight: bold;"
+                                                                            value="{{ $item->debtors_name }}">
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label for="exampleFormControlInput1">ที่อยู่
+                                                                        </label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="debtors_address"
+                                                                            style="color: black; font-weight: bold;"
+                                                                            value="{{ $item->debtors_address }}">
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label for="exampleFormControlInput1">เบอร์โทร
+                                                                        </label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="debtors_phone"
+                                                                            style="color: black; font-weight: bold;"
+                                                                            value="{{ $item->debtors_phone }}">
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                            for="exampleFormControlInput1">ลิงค์รูปบัตรประชาชน
+                                                                        </label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="debtors_id_image"
+                                                                            style="color: black; font-weight: bold;"
+                                                                            value="{{ $item->debtors_id_image }}">
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label for="exampleFormControlInput1">เปอร์เซ็น
+                                                                        </label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="per"
+                                                                            style="color: black; font-weight: bold;"
+                                                                            value="{{ $item->per }}">
+                                                                    </div>
+
+                                                                    <button type="button"
+                                                                        class="btn bg-gradient-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                    <button type="submit"
+                                                                        class="btn bg-gradient-primary">Save
+                                                                        changes</button>
+                                                            </div>
+
+                                                            </form>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
 
                                                 <button type="button" class="btn btn-outline-secondary"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal2{{ $item->id }}">
                                                     <i class="fas fa-folder-open"></i>
                                                 </button>
+
+
 
                                                 <a href="{{ url('/debtors/delete/' . $item->id) }}"
                                                     class=" btn btn-danger" onclick="return confirm('ลบหรือไม่ ?')">

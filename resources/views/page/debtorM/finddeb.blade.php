@@ -8,9 +8,18 @@
 
 
 
-                <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    เพิ่มรายการยอดค้าง
-                </button>
+                @if ($deb3->count() > 0)
+                    <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        disabled>
+                        เพิ่มรายการยอดค้าง
+                    </button>
+                @else
+                    <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        เพิ่มรายการยอดค้าง
+                    </button>
+                @endif
+
 
 
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -70,6 +79,7 @@
                                 <th class="text-center">วันที่เริ่ม</th>
                                 <th class="text-center">วันครบกำหนด</th>
                                 <th class="text-center">เวลากำหนดครบชำระ</th>
+                                <th class="text-center">แก้ไขข้อมูล</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -90,7 +100,83 @@
                                         <h6 class="mb-0 text-md">{{ $fullM }} เดือน {{ $fullD }} วัน</h6>
                                     </td>
 
+                                    <td class="text-center">
 
+
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModalEdit{{ $item->id }}">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+
+                                        <div class="modal fade" id="exampleModalEdit{{ $item->id }}" tabindex="-1"
+                                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">
+                                                            แก้ไขข้อมูลการค้างชำระ </h5>
+
+                                                    </div>
+                                                    <div class="modal-body">
+
+
+                                                        <form action="{{ url('/debtors-m/store/update/' . $item->id) }}"
+                                                            method="POST" enctype="multipart/form-data">
+                                                            @csrf
+
+
+                                                            <div class="row">
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="exampleFormControlInput1">จำนวนเงินต้น
+                                                                        </label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="debtors_name"
+                                                                            style="color: black; font-weight: bold;"
+                                                                            value="{{ $item->total_price }}" readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="exampleFormControlInput1">วันที่เริ่ม
+                                                                        </label>
+
+                                                                        <input class="form-control" type="date"
+                                                                            name="created_at"
+                                                                            value="{{ date('Y-m-d', strtotime($item->created_at)) }}"
+                                                                            style="color: black; font-weight: bold;">
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-4">
+                                                                    <div class="form-group">
+                                                                        <label for="exampleFormControlInput1">วันครบกำหนด
+                                                                        </label>
+                                                                        <input class="form-control" type="date"
+                                                                            name="end_date" value="{{ $item->end_date }}"
+                                                                            style="color: black; font-weight: bold;">
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+
+
+                                                            <button type="button" class="btn bg-gradient-secondary"
+                                                                data-bs-dismiss="modal">Close</button>
+                                                            <button type="submit" class="btn bg-gradient-primary">Save
+                                                                changes</button>
+                                                    </div>
+
+                                                    </form>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </td>
 
 
                                 </tr>
@@ -116,8 +202,8 @@
                 </button>
 
 
-                <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
+                <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -128,7 +214,8 @@
                             </div>
                             <div class="modal-body">
 
-                                <form action="{{ route('payment.store') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('payment.store') }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">ยอดเงิน</label>

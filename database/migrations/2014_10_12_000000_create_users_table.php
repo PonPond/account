@@ -55,6 +55,7 @@ return new class extends Migration
             $table->unsignedBigInteger('debt_id');
             $table->string('title')->nullable();
             $table->decimal('round_amount', 10, 2)->default(0);
+            $table->string('status')->default('active');
             $table->timestamps();
             $table->foreign('debt_id')->references('id')->on('debtors')->onDelete('cascade');
         });

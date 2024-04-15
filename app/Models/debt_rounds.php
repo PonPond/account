@@ -13,5 +13,6 @@ class debt_rounds extends Model
         'debt_id',
         'title',
         'round_amount',
+        'status',
     ];
 }

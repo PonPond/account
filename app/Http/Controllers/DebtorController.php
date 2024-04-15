@@ -81,4 +81,41 @@ class DebtorController extends Controller
         return redirect()->back()->with('delete', "ลบเรียบร้อยแล้ว");
 
     }
+
+
+    public function update(Request $request, $id)
+    {
+       
+
+        $request->validate([
+            'debtors_name' => 'required',
+            'debtors_address' => 'required',
+            'debtors_phone' => 'required',
+            'debtors_id_image' => 'required',
+            'per' => 'required',
+            
+
+        ],
+
+            ['debtors_name.required' => "ห้ามเป็นค่าว่าง",
+            'debtors_address.required' => "ห้ามเป็นค่าว่าง",
+            'debtors_phone.required' => "ห้ามเป็นค่าว่าง",
+            'debtors_id_image.required' => "ห้ามเป็นค่าว่าง",
+            'per.required' => "ห้ามเป็นค่าว่าง",
+            ]
+        );  
+        
+        Debtor::find($id)->update([
+            'debtors_name' => $request->debtors_name,
+            'debtors_address' => $request->debtors_address,
+            'debtors_phone' => $request->debtors_phone,
+            'debtors_id_image' => $request->debtors_id_image,
+            'per' => $request->per,
+
+        ]);
+
+    
+        return redirect()->back()->with('update', "อัพเดตข้อมูลเรียบร้อย");
+        // return redirect()->route('usermanager')->with('success',"อัพเดตข้อมูลเรียบร้อย");
+    }
 }

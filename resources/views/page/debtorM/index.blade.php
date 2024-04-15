@@ -24,7 +24,8 @@
                                         <div class="d-flex px-2 py-1">
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="mb-0 text-md">{{ $item->debtors_name }}</h6>
-                                                <p class="text-xs text-secondary mb-0">{{ $item->debtors_address }}</p>
+                                                <h6 class="text-md  mb-0" style="color: black">{{ $item->debtors_address }}
+                                                </h6>
                                             </div>
                                         </div>
                                     </td>
