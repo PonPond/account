@@ -32,6 +32,12 @@
             color: black;
 
         }
+
+        .form-group input {
+            color: black;
+            font-weight: 1000;
+            font-size: 18px;
+        }
     </style>
     <div class="min-height-300 bg-primary position-absolute w-100"></div>
     <aside

@@ -5,15 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class debt_rounds extends Model
+class dd_payment extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'debt_id',
-        'title',
-        'round_amount',
-        'round_interest',
-        'status',
+        'debt_id ',
+        'amount',
+        'debt_rounds_id',
     ];
 }

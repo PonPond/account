@@ -8,6 +8,8 @@ use App\Models\Payments;
 use App\Models\Orders;
 use App\Models\Summarys;
 use App\Models\debt_rounds;
+use App\Models\dd_payment;
+use App\Models\remark;
 use Carbon\Carbon;
 use Phattarachai\LineNotify\Facade\Line;
 
@@ -49,12 +51,25 @@ class DebtorMController extends Controller
         return redirect()->back()->with('delete', "ลบเรียบร้อยแล้ว");
     }
 
+    public function updatemoney(Request $request, $id)
+    {
+      
+        
+        debt_rounds::find($id)->update([
+            'round_amount' => $request->round_amount,
+            'round_interest' => $request->round_interest,
+            
+        ]);
+        return redirect()->back()->with('update', "ปรับปรุงยอดเรียบร้อย");
+    }
+
+
+
     public function readdeb($id)
     {
         
-        $deb1 = Debtor::find($id);
-        
-
+    
+        $deb1 = Debtor::find($id);    
         $deb5 = debt_rounds::find($id);
         $deb3 = Orders::where('debt_id', $deb5->debt_id)
         ->where('debt_rounds_id', '=', $deb5->id)
@@ -63,7 +78,10 @@ class DebtorMController extends Controller
         $deb8 = Orders::where('debt_id', $deb5->debt_id)
         ->where('debt_rounds_id', '=', $deb5->id)
         ->first();
-
+        
+        $remark = remark::where('debt_id', $deb5->debt_id)
+        ->where('debt_rounds_id', '=', $deb5->id)
+        ->get();
    
 
         $deb4= debt_rounds::where('debt_id',$id)->get();
@@ -74,6 +92,12 @@ class DebtorMController extends Controller
         ->get();
 
         $totalsum = $deb2->sum('amount');
+
+        $dd_payment = dd_payment::where('debt_id', $deb5->debt_id)
+        ->where('debt_rounds_id', '=', $deb5->id)
+        ->get();
+
+        $totalsumdd = $dd_payment->sum('amount');
        
 
         $deb7 = Summarys::where('debt_id', $deb5->debt_id)
@@ -83,6 +107,7 @@ class DebtorMController extends Controller
       
         $totalAmountD = $deb7->sum('amount_d');
 
+        $totalAmountD -=  $totalsumdd;
         if (!empty($deb3[0])) {
             $result = $this->calculateRemainingPeriods($deb3[0]->end_date);
             $fullM = $result['fullM'];
@@ -110,7 +135,7 @@ class DebtorMController extends Controller
         }
       
         
-        return view('page.debtorM.finddeb', compact('deb1','deb2','deb3','deb4','deb5','deb6','deb7','deb8','totalAmountD','fullM','fullD','per','day','fullper','rday','totalint','totalsum'));
+        return view('page.debtorM.finddeb', compact('deb1','deb2','deb3','deb4','deb5','deb6','deb7','deb8','totalAmountD','fullM','fullD','per','day','fullper','rday','totalint','totalsum','remark','dd_payment','totalsumdd'));
     }
 
     

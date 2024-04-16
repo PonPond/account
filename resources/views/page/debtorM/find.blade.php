@@ -18,7 +18,9 @@
                             <form action="{{ route('debtorsM.storeround') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" class="form-control" name="debt_id" value="{{ $deb1->id }}">
-                                <input type="text" class="form-control" name="title">
+                                <input type="text" class="form-control" name="title"
+                                    style="color: black ; font-weight: 1000;
+                                font-size: 18px;">
                                 <br>
                                 <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">ปิด
                                 </button>
@@ -56,14 +58,27 @@
                             @foreach ($deb4 as $item)
                                 <div class="col-md-6 mb-3">
                                     <div class="card card-body border card-plain border-radius-lg d-flex  flex-row">
-                                        <img class="w-10 me-3 mb-0" src="../assets/img/logos/month.png" alt="logo">
-
+                                        <img class="w-15 me-3 mb-0" src="../assets/img/logos/month.png" alt="logo">
 
                                         <div class="div">
                                             <h6 class="mb-0"> วันที่ทำรายการ:
                                                 {{ $ThaiFormat->makeFormat2($item->created_at) }}</h6>
 
                                             <h6 class="mb-0"> หมายเหตุ: {{ $item->title }}</h6>
+                                            <h6 class="mb-0"> สถานะ:
+                                                @if ($item->status == 'active')
+                                                    <span class="badge badge-pill badge-lg bg-gradient-success">ปกติ</span>
+                                                @elseif($item->status == 'complete')
+                                                    <span
+                                                        class="badge badge-pill badge-lg bg-gradient-warning">เสร็จสิ้น</span>
+                                                @endif
+
+                                            </h6>
+                                            <h6 class="mb-0"> เงินต้นติดค้าง: {{ $item->round_amount }} บาท</h6>
+                                            <h6 class="mb-0"> ดอกเบี้ยติดค้าง: {{ $item->round_interest }} บาท</h6>
+                                            <h6 class="mb-0"> อัปเดทล่าสุด:
+                                                {{ $ThaiFormat->makeFormat2($item->updated_at) }} </h6>
+
                                         </div>
                                         <div class="div" style="margin-left: 50%">
                                             <a href="{{ url('/debtors-m/round/' . $item->id) }}"
@@ -80,7 +95,6 @@
                                         </div>
 
                                     </div>
-
 
                                 </div>
                             @endforeach

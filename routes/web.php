@@ -6,8 +6,7 @@ use App\Http\Controllers\DebtorMController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SummarysController;
-
-
+use App\Http\Controllers\RemarkController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,6 +36,8 @@ Route::middleware([
     Route::get('/debtors-m/round/{id}', [DebtorMController::class, 'readdeb']);
     Route::get('/debtors-m/delete/{id}', [DebtorMController::class, 'delete']);
     Route::get('/debtors-m/update/{id}', [DebtorMController::class, 'update']);
+    Route::post('/debtors-m/update/money/{id}', [DebtorMController::class, 'updatemoney']);
+    
 
 
 
@@ -47,8 +48,13 @@ Route::middleware([
     Route::post('/debtors-m/store', [OrderController::class, 'store'])->name('debtorsM.store');
 
     Route::post('/payment/store', [PaymentController::class, 'store'])->name('payment.store');
+    Route::post('/payment/dd/store', [PaymentController::class, 'storedd'])->name('dd_payment.store');
 
     Route::post('/summary/store', [SummarysController::class, 'store'])->name('summary.store');
 
+
+
+    Route::post('/remark/store', [RemarkController::class, 'store'])->name('remark.store');
+    Route::get('/remark/delete/{id}', [RemarkController::class, 'delete'])->name('remark.delete');
 
 });
