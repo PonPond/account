@@ -38,6 +38,26 @@
             font-weight: 1000;
             font-size: 18px;
         }
+
+
+
+        #myForm {
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            /* Make the input group span the full width */
+        }
+
+        #confirmation_code {
+            flex: 1;
+            margin-right: 10px;
+            /* Adjust the margin as needed */
+        }
     </style>
     <div class="min-height-300 bg-primary position-absolute w-100"></div>
     <aside

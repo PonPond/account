@@ -581,124 +581,6 @@
 
 
 
-
-
-
-
-
-
-    {{-- <div class="col-4">
-
-        <div class="card mb-4">
-
-
-            <div class="card-header pb-0">
-                <h6>ยอดจ่ายเงินต้น</h6>
-
-                @if ($deb8)
-                    @if ($totalsum == $deb8->total_price)
-                        <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal1" disabled>
-                            เพิ่มการจ่ายเงินต้น
-                        </button>
-
-                        <button type="button" class="btn bg-gradient-success">
-                            ชำระเงินต้นครบแล้ว
-                        </button>
-                    @else
-                        <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal1">
-                            เพิ่มการจ่ายเงินต้น
-                        </button>
-                    @endif
-                @else
-                    <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal1">
-                        เพิ่มการจ่ายเงินต้น
-                    </button>
-                @endif
-
-
-
-
-                <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">เพิ่มรายการหนี้รายเดือน</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-
-                                <form action="{{ route('payment.store') }}" method="POST"
-                                    enctype="multipart/form-data">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label for="exampleFormControlInput1">ยอดเงิน</label>
-                                        <input type="text" class="form-control" id="exampleFormControlInput1"
-                                            name="amount">
-                                    </div>
-
-
-                                    <input type="hidden" class="form-control" name="debt_rounds_id"
-                                        value="{{ $deb5->id }}">
-                                    <input type="hidden" class="form-control" name="debt_id"
-                                        value="{{ $deb5->debt_id }}">
-                                    <input type="hidden" class="form-control" id="exampleFormControlInput1"
-                                        name="amount_d" value="{{ $totalint }}">
-                                    <button type="button" class="btn bg-gradient-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn bg-gradient-primary">Save changes</button>
-                            </div>
-
-                            </form>
-
-
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="card-body px-0 pt-0 pb-2">
-                <div class="table-responsive p-0">
-                    <table class="table align-items-center mb-0">
-                        <thead>
-                            <tr>
-
-                                <th class="text-center">วันที่จ่าย</th>
-                                <th class="text-center">ยอดเงิน</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($deb2 as $item)
-                                <tr>
-                                    <td class="text-center">
-                                        <h6 class="mb-0 text-md">{{ $ThaiFormat->makeFormat2($item->created_at) }}</h6>
-                                    </td>
-
-                                    <td class="text-center">
-                                        <h6 class="mb-0 text-md">{{ $item->amount }}</h6>
-                                    </td>
-
-
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
-                    <h5 style="margin-left: 60%">รวม: {{ $totalsum }} บาท</h5>
-                </div>
-            </div>
-
-
-
-        </div>
-    </div> --}}
-
-
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0">
@@ -728,10 +610,10 @@
                                 @endif
 
 
-                                <button type="submit" class="btn bg-gradient-danger"
+                                <button type="submit" class="btn bg-gradient-danger" style="margin-right: 10px"
                                     onclick="return confirm('ปรับปรุงยอดหรือไม่ ?')">ปรับปรุงยอด</button>
                             @else
-                                <button type="submit" class="btn bg-gradient-danger"
+                                <button type="submit" class="btn bg-gradient-danger" style="margin-right: 10px"
                                     onclick="return confirm('ปรับปรุงยอดหรือไม่ ?')" disabled>ปรับปรุงยอด</button>
                             @endif
 
@@ -739,6 +621,39 @@
 
 
                         </form>
+
+                        <form id="myForm" action="{{ url('/debtors-m/update/money/' . $deb5->id) }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+
+                            <input type="password" class="form-control" id="confirmation_code" name="confirmation_code"
+                                placeholder="กรอกรหัสยืนยัน"
+                                style="margin-bottom: 10px; color: rgb(2, 2, 2); font-weight: 1000;font-size: 18px;">
+
+                            <button type="submit" class="btn bg-gradient-dark"
+                                onclick="return customConfirm()">ปิดบิล</button>
+
+                        </form>
+
+                        <script>
+                            function customConfirm() {
+                                // ดึงค่ารหัสยืนยันจาก input field
+                                var confirmationCode = document.getElementById("confirmation_code").value;
+
+                                // ตรวจสอบว่ารหัสยืนยันเป็น 1234 หรือไม่
+                                if (confirmationCode === '1234') {
+                                    // ถ้ารหัสยืนยันถูกต้อง ให้ submit ฟอร์ม
+                                    document.getElementById("myForm").submit();
+                                    return true; // ส่งค่า true กลับไปยังการเรียกใช้งาน onclick เพื่อทำการ submit ฟอร์ม
+                                } else {
+                                    // ถ้ารหัสยืนยันไม่ถูกต้อง ให้แจ้งเตือนและไม่ submit ฟอร์ม
+                                    alert('รหัสยืนยันไม่ถูกต้อง');
+                                    return false; // ส่งค่า false กลับไปยังการเรียกใช้งาน onclick เพื่อไม่ทำการ submit ฟอร์ม
+                                }
+                            }
+                        </script>
+
+
 
                     </div>
 
