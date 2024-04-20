@@ -12,13 +12,9 @@ use App\Models\dd_payment;
 use App\Models\remark;
 use Carbon\Carbon;
 use Phattarachai\LineNotify\Facade\Line;
-
+use Illuminate\Support\Facades\DB;
 class DebtorMController extends Controller
 {
-
-
-    
-
 
     public function indexD()
     {
@@ -54,8 +50,10 @@ class DebtorMController extends Controller
         $deb1 = Debtor::find($id);
         $deb2= Payments::where('debt_id',$id)->get();
         $deb3= Orders::where('debt_id',$id)->get();
-        $deb4 = debt_rounds::where('debt_id',$id)->where('status', 'active')->orWhere('status', 'complete')->get();
-
+        $deb4 = DB::table('debt_rounds')
+        ->where('debt_id', $id)
+        ->whereIn('status', ['active', 'complete'])
+        ->get();
         
         return view('page.debtorM.find', compact('deb1','deb2','deb3','deb4'));
     }
@@ -145,7 +143,9 @@ class DebtorMController extends Controller
         $totalAmountDCP = $deb7->sum('amount_d');
 
 
-        $totalAmountD -=  $totalsumdd;
+        $totalAmountD = intval($totalAmountD);
+        $totalAmountD -=  intval($totalsumdd)   ;
+
         if (!empty($deb3[0])) {
             $result = $this->calculateRemainingPeriods($deb3[0]->end_date);
             $fullM = $result['fullM'];
