@@ -12,6 +12,7 @@ class g_debtors extends Model
     protected $fillable = [
         'g_name',
         'g_address',
+        'g_id',
         'g_phone',
         'g_id_image',
         'debt_id',

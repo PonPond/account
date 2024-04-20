@@ -22,6 +22,11 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="exampleFormControlInput1">รหัสบัตรประชาชน</label>
+                                <input type="text" class="form-control" name="debtors_id">
+                            </div>
+
+                            <div class="form-group">
                                 <label for="exampleFormControlInput1">เบอร์โทร ลูกหนี้</label>
                                 <input type="text" class="form-control" name="debtors_phone">
                             </div>
@@ -35,7 +40,8 @@
 
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">ประเภทลูกหนี้</label>
-                                <select class="form-control" id="exampleFormControlSelect1" name="type">
+                                <select class="form-control" id="exampleFormControlSelect1" name="type"
+                                    style="color: black; font-weight: bold;">
                                     <option value="รายวัน">รายวัน</option>
                                     <option value="รายเดือน">รายเดือน</option>
                                     <option value="รายปี">รายปี</option>
@@ -45,7 +51,8 @@
 
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">เปอร์เซ็น</label>
-                                <input type="text" class="form-control" name="per">
+                                <input type="text" class="form-control" name="per"
+                                    style="color: black; font-weight: bold;">
                             </div>
 
                             @error('debtors_name')
@@ -229,6 +236,16 @@
                                                                     </div>
 
                                                                     <div class="form-group">
+                                                                        <label
+                                                                            for="exampleFormControlInput1">รหัสบัตรประชาชน
+                                                                        </label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="g_id"
+                                                                            style="color: black; font-weight: bold;">
+                                                                    </div>
+
+
+                                                                    <div class="form-group">
                                                                         <label for="exampleFormControlInput1">เบอร์โทร
                                                                         </label>
                                                                         <input type="text" class="form-control"
@@ -293,6 +310,15 @@
                                                                             name="debtors_address"
                                                                             style="color: black; font-weight: bold;"
                                                                             value="{{ $item->debtors_address }}">
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                            for="exampleFormControlInput1">รหัสบัตรประชาชน
+                                                                        </label>
+                                                                        <input type="text" class="form-control"
+                                                                            style="color: black; font-weight: bold;"
+                                                                            value="{{ $item->debtors_id }}" disabled>
                                                                     </div>
 
                                                                     <div class="form-group">
@@ -384,6 +410,11 @@
                                                                             <span class="mb-2 text-xl">
                                                                                 @foreach ($item->debg as $item1)
                                                                                     {{ $item1->g_phone }}
+                                                                                @endforeach
+                                                                            </span>
+                                                                            <span class="mb-2 text-xl">
+                                                                                @foreach ($item->debg as $item1)
+                                                                                    {{ $item1->g_id }}
                                                                                 @endforeach
                                                                             </span>
                                                                             <span class="text-xs">

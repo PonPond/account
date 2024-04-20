@@ -12,6 +12,7 @@ class Debtor extends Model
     protected $fillable = [
         'debtors_name',
         'debtors_address',
+        'debtors_id',
         'debtors_phone',
         'debtors_id_image',
         'type',

@@ -15,6 +15,19 @@ use Phattarachai\LineNotify\Facade\Line;
 
 class DebtorMController extends Controller
 {
+
+
+    
+
+
+    public function indexD()
+    {
+        $debtor = Debtor::where('type',"รายวัน")->get();
+        // Line::send('ทดสอบ');
+
+        return view('page.debtorD.index',compact('debtor'));
+    }
+
     public function index()
     {
         $debtor = Debtor::where('type',"รายเดือน")->get();
@@ -23,12 +36,25 @@ class DebtorMController extends Controller
         return view('page.debtorM.index',compact('debtor'));
     }
 
+    public function indexY()
+    {
+        $debtor = Debtor::where('type',"รายปี")->get();
+        // Line::send('ทดสอบ');
+
+        return view('page.debtorY.index',compact('debtor'));
+    }
+
+    public function notify()
+    {
+        Line::send('ทดสอบ');
+    }
+
     public function read($id)
     {
         $deb1 = Debtor::find($id);
         $deb2= Payments::where('debt_id',$id)->get();
         $deb3= Orders::where('debt_id',$id)->get();
-        $deb4 = debt_rounds::where('debt_id',$id)->where('status', 'active')->get();
+        $deb4 = debt_rounds::where('debt_id',$id)->where('status', 'active')->orWhere('status', 'complete')->get();
 
         
         return view('page.debtorM.find', compact('deb1','deb2','deb3','deb4'));
@@ -49,6 +75,15 @@ class DebtorMController extends Controller
             'status' => "inactive",
         ]);
         return redirect()->back()->with('delete', "ลบเรียบร้อยแล้ว");
+    }
+
+    public function updatefinal(Request $request, $id)
+    {
+        
+        debt_rounds::find($id)->update([
+            'status' => "complete",
+        ]);
+        return redirect()->back()->with('complete', "ปิดบิลเรียบร้อย");
     }
 
     public function updatemoney(Request $request, $id)
@@ -106,6 +141,9 @@ class DebtorMController extends Controller
         ->get();
       
         $totalAmountD = $deb7->sum('amount_d');
+        
+        $totalAmountDCP = $deb7->sum('amount_d');
+
 
         $totalAmountD -=  $totalsumdd;
         if (!empty($deb3[0])) {
@@ -135,7 +173,7 @@ class DebtorMController extends Controller
         }
       
         
-        return view('page.debtorM.finddeb', compact('deb1','deb2','deb3','deb4','deb5','deb6','deb7','deb8','totalAmountD','fullM','fullD','per','day','fullper','rday','totalint','totalsum','remark','dd_payment','totalsumdd'));
+        return view('page.debtorM.finddeb', compact('deb1','deb2','deb3','deb4','deb5','deb6','deb7','deb8','totalAmountD','fullM','fullD','per','day','fullper','rday','totalint','totalsum','remark','dd_payment','totalsumdd','totalAmountDCP'));
     }
 
     

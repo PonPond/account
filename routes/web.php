@@ -30,15 +30,20 @@ Route::middleware([
     Route::get('/debtors/delete/{id}', [DebtorController::class, 'deleteb']);
 
 
-    
+    Route::get('/debtor-d', [DebtorMController::class, 'indexD'])->name('debtord.index');
     Route::get('/debtor-m', [DebtorMController::class, 'index'])->name('debtorm.index');
+    Route::get('/debtor-y', [DebtorMController::class, 'indexY'])->name('debtory.index');
     Route::get('/debtors-m/{id}', [DebtorMController::class, 'read']);
     Route::get('/debtors-m/round/{id}', [DebtorMController::class, 'readdeb']);
     Route::get('/debtors-m/delete/{id}', [DebtorMController::class, 'delete']);
     Route::get('/debtors-m/update/{id}', [DebtorMController::class, 'update']);
     Route::post('/debtors-m/update/money/{id}', [DebtorMController::class, 'updatemoney']);
+    Route::post('/debtors-m/update/final/{id}', [DebtorMController::class, 'updatefinal']);
     
+    Route::get('/check-zero-values', [DebtorMController::class, 'notify']);
 
+
+  
 
 
     Route::post('/debtors-m/store/round', [OrderController::class, 'storeround'])->name('debtorsM.storeround');

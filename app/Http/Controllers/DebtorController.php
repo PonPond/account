@@ -22,6 +22,7 @@ class DebtorController extends Controller
         $request->validate([
             'debtors_name' => 'required',
             'debtors_address' => 'required',
+            'debtors_id' => 'required',
             'debtors_phone' => 'required',
             'debtors_id_image' => 'required',
             'type' => 'required',
@@ -30,6 +31,7 @@ class DebtorController extends Controller
             [
                 'debtors_name.required' => "ชื่อ-นามสกุล ลูกหนี้",
                 'debtors_address.required' => "ที่อยู่ ลูกหนี้",
+                'debtors_id.required' => "รหัสบัตรประชาชน",
                 'debtors_phone.required' => "เบอร์โทร ลูกหนี้",
                 'debtors_id_image.required' => "ลิงค์รูปบัตรประชาชน ลูกหนี้",
                 'type.required' => "ประเภทลูกหนี้",
@@ -41,6 +43,7 @@ class DebtorController extends Controller
         $tableName = new Debtor();
         $tableName->debtors_name = $request->debtors_name;
         $tableName->debtors_address = $request->debtors_address;
+        $tableName->debtors_id = $request->debtors_id;
         $tableName->debtors_phone = $request->debtors_phone;
         $tableName->debtors_id_image = $request->debtors_id_image;
         $tableName->type = $request->type;
@@ -56,6 +59,7 @@ class DebtorController extends Controller
         $tableName = new g_debtors();
         $tableName->g_name = $request->g_name;
         $tableName->g_address = $request->g_address;
+        $tableName->g_id = $request->g_id;
         $tableName->g_phone = $request->g_phone;
         $tableName->g_id_image = $request->g_id_image;
         $tableName->debt_id  = $request->debt_id ;

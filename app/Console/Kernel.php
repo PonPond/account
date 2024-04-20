@@ -12,7 +12,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+
+      
+
+        // $schedule->call(function () {
+        //     // เรียกใช้งานฟังก์ชันใน Controller
+        //     app('App\Http\Controllers\DebtorMController')->notify();
+        // })->everyTenSeconds(); // เรียกใช้งานทุก 10 วินาที
     }
 
     /**

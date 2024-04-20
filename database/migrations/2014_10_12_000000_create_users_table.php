@@ -30,6 +30,7 @@ return new class extends Migration
             $table->id();
             $table->string('debtors_name');
             $table->string('debtors_address');
+            $table->string('debtors_id');
             $table->string('debtors_phone');
             $table->string('debtors_id_image');
             $table->string('type');
@@ -43,6 +44,7 @@ return new class extends Migration
             $table->unsignedBigInteger('debt_id');
             $table->string('g_name')->nullable();
             $table->string('g_address')->nullable();
+            $table->string('g_id')->nullable();
             $table->string('g_phone')->nullable();
             $table->string('g_id_image')->nullable();
             $table->foreign('debt_id')->references('id')->on('debtors')->onDelete('cascade');
