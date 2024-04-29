@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use DataTables;
 use Illuminate\Http\Request;
 use App\Models\Debtor;
 use App\Models\Payments;
@@ -16,30 +16,46 @@ use Illuminate\Support\Facades\DB;
 class DebtorMController extends Controller
 {
 
-    public function indexD()
+    public function indexD(Request $request)
     {
-        $debtor = Debtor::where('type',"รายวัน")->get();
-        // Line::send('ทดสอบ');
+        $data = Debtor::where('type',"รายวัน")->get();
 
-        return view('page.debtorD.index',compact('debtor'));
+
+        if ($request->ajax()) {
+            $data = Debtor::where('type',"รายวัน")->get();
+            return DataTables()->of($data)
+               
+                ->make(true);
+        }
+        return view('page.debtorD.index', ['debtord' => $data]);
     }
-
-    public function index()
+    public function index(Request $request)
     {
-        $debtor = Debtor::where('type',"รายเดือน")->get();
-        // Line::send('ทดสอบ');
+        $data = Debtor::where('type',"รายเดือน")->get();
 
-        return view('page.debtorM.index',compact('debtor'));
+
+        if ($request->ajax()) {
+            $data = Debtor::where('type',"รายเดือน")->get();
+            return DataTables()->of($data)
+               
+                ->make(true);
+        }
+        return view('page.debtorM.index', ['debtorm' => $data]);
     }
-
-    public function indexY()
+    public function indexY(Request $request)
     {
-        $debtor = Debtor::where('type',"รายปี")->get();
-        // Line::send('ทดสอบ');
+        $data = Debtor::where('type',"รายปี")->get();
 
-        return view('page.debtorY.index',compact('debtor'));
+
+        if ($request->ajax()) {
+            $data = Debtor::where('type',"รายปี")->get();
+            return DataTables()->of($data)
+               
+                ->make(true);
+        }
+        return view('page.debtorY.index', ['debtory' => $data]);
     }
-
+    
     public function notify()
     {
         Line::send('ทดสอบ');

@@ -23,6 +23,7 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('/debtor', [DebtorController::class, 'index'])->name('debtor.index');
+    // Route::get('/debtor', [DebtorController::class, 'index'])->name('debtor.index');
     Route::post('/debtors/store', [DebtorController::class, 'store'])->name('debtors.store');
     Route::post('/debtors/update/{id}', [DebtorController::class, 'update'])->name('debtors.update');
     Route::post('/debtors/storeg', [DebtorController::class, 'storeg'])->name('deb.storeg');
