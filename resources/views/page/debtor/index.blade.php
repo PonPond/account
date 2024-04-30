@@ -1,29 +1,9 @@
 @extends('layouts.index')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <style>
-    /* สไตล์ที่ปรับแต่งเพิ่มเติมสำหรับ DataTables */
     #myTable_wrapper {
-        padding: 20px;
-        /* ปรับระยะขอบของตาราง */
-        border: 1px solid #fff;
-        /* เพิ่มเส้นขอบ */
-        border-radius: 10px;
-        /* ทำให้เส้นขอบมีรูปร่างโค้ง */
-    }
+        padding: 10px;
 
-    #myTable th {
-        background-color: #f2f2f2;
-        /* สีพื้นหลังของหัวคอลัมน์ */
-    }
-    #myTable {
-        width: 100%;
-        /* สีพื้นหลังของหัวคอลัมน์ */
-    }
-
-    #myTable td {
-        background-color: #fff;
-        /* สีพื้นหลังของเซลล์ข้อมูล */
     }
 </style>
 <div class="container-fluid py-4">

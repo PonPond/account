@@ -1,6 +1,5 @@
 @extends('layouts.index')
 @section('content')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <style>
     #myTable_wrapper {
         padding: 10px;
@@ -9,10 +8,6 @@
 
 
 
-    #myTable td {
-        background-color: #fff;
-        /* สีพื้นหลังของเซลล์ข้อมูล */
-    }
 </style>
 <div class="col-12">
     <div class="card mb-4">

@@ -18,42 +18,46 @@ class DebtorMController extends Controller
 
     public function indexD(Request $request)
     {
-        $data = Debtor::where('type',"รายวัน")->get();
-
+        $data = DB::table('debtors')
+        ->select('debtors.*')
+        ->where('type', 'รายวัน')
+        ->orderByDesc('created_at');
 
         if ($request->ajax()) {
-            $data = Debtor::where('type',"รายวัน")->get();
             return DataTables()->of($data)
                
                 ->make(true);
         }
-        return view('page.debtorD.index', ['debtord' => $data]);
+        return view('page.debtorD.index');
     }
     public function index(Request $request)
     {
-        $data = Debtor::where('type',"รายเดือน")->get();
-
+        $data = DB::table('debtors')
+        ->select('debtors.*')
+        ->where('type', 'รายเดือน')
+        ->orderByDesc('created_at');
 
         if ($request->ajax()) {
-            $data = Debtor::where('type',"รายเดือน")->get();
             return DataTables()->of($data)
                
                 ->make(true);
         }
-        return view('page.debtorM.index', ['debtorm' => $data]);
+        return view('page.debtorM.index');
     }
     public function indexY(Request $request)
     {
-        $data = Debtor::where('type',"รายปี")->get();
+        $data = DB::table('debtors')
+        ->select('debtors.*')
+        ->where('type', 'รายปี')
+        ->orderByDesc('created_at');
 
 
         if ($request->ajax()) {
-            $data = Debtor::where('type',"รายปี")->get();
             return DataTables()->of($data)
                
                 ->make(true);
         }
-        return view('page.debtorY.index', ['debtory' => $data]);
+        return view('page.debtorY.index');
     }
     
     public function notify()

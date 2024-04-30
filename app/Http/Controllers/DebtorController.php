@@ -6,19 +6,24 @@ use Illuminate\Http\Request;
 use App\Models\Debtor;
 use App\Models\g_debtors;
 use DataTables;
+use Illuminate\Support\Facades\DB;
 
 class DebtorController extends Controller
 {
 
     public function index(Request $request)
     {
-        $data = Debtor::latest()->get();
-        $debtorg = g_debtors::all();
-
-
         if ($request->ajax()) {
-            $data = Debtor::latest()->get();
-            return DataTables()->of($data)
+            // ดึงข้อมูลจากตาราง debtors และเรียงลำดับตาม created_at จากมากไปน้อย
+            $data = DB::table('debtors')
+                ->select('debtors.*')
+                ->orderByDesc('debtors.created_at');
+            // ดึงข้อมูลจากตาราง g_debtors และเรียงลำดับตาม created_at จากมากไปน้อย
+            $debtorg = g_debtors::orderByDesc('created_at')->get();
+
+            return DataTables::of($data)
+
+                ->addIndexColumn()
                 ->addColumn('g_user_id', function ($row) use ($debtorg) {
                     $debtors = '';
                     foreach ($debtorg as $debt) {
@@ -28,7 +33,7 @@ class DebtorController extends Controller
                     }
                     return $debtors;
                 })
-               
+
                 ->addColumn('g_id', function ($row) use ($debtorg) {
                     $debtors = '';
                     foreach ($debtorg as $debt) {
@@ -38,7 +43,7 @@ class DebtorController extends Controller
                     }
                     return $debtors;
                 })
-                
+
                 ->addColumn('g_name', function ($row) use ($debtorg) {
                     $debtors = '';
                     foreach ($debtorg as $debt) {
@@ -75,11 +80,86 @@ class DebtorController extends Controller
                     }
                     return $debtors;
                 })
-                ->rawColumns(['g_user_id','g_name','g_id','g_address','g_phone','g_id_image'])
+                ->rawColumns(['g_user_id', 'g_name', 'g_id', 'g_address', 'g_phone', 'g_id_image'])
+
+
                 ->make(true);
         }
-        return view('page.debtor.index', ['debtor' => $data]);
+
+        return view('page.debtor.index');
+        // return view('page.debtor.index');
     }
+
+    // public function index(Request $request)
+    // {
+    //     $data = Debtor::latest()->get();
+    //     $debtorg = g_debtors::all();
+
+
+    //     if ($request->ajax()) {
+    //         $data = Debtor::latest()->get();
+    //         return DataTables()->of($data)
+    //             ->addColumn('g_user_id', function ($row) use ($debtorg) {
+    //                 $debtors = '';
+    //                 foreach ($debtorg as $debt) {
+    //                     if ($debt->debt_id == $row->id) {
+    //                         $debtors .= $debt->id;
+    //                     }
+    //                 }
+    //                 return $debtors;
+    //             })
+
+    //             ->addColumn('g_id', function ($row) use ($debtorg) {
+    //                 $debtors = '';
+    //                 foreach ($debtorg as $debt) {
+    //                     if ($debt->debt_id == $row->id) {
+    //                         $debtors .= $debt->g_id;
+    //                     }
+    //                 }
+    //                 return $debtors;
+    //             })
+
+    //             ->addColumn('g_name', function ($row) use ($debtorg) {
+    //                 $debtors = '';
+    //                 foreach ($debtorg as $debt) {
+    //                     if ($debt->debt_id == $row->id) {
+    //                         $debtors .= $debt->g_name;
+    //                     }
+    //                 }
+    //                 return $debtors;
+    //             })
+    //             ->addColumn('g_address', function ($row) use ($debtorg) {
+    //                 $debtors = '';
+    //                 foreach ($debtorg as $debt) {
+    //                     if ($debt->debt_id == $row->id) {
+    //                         $debtors .= $debt->g_address;
+    //                     }
+    //                 }
+    //                 return $debtors;
+    //             })
+    //             ->addColumn('g_phone', function ($row) use ($debtorg) {
+    //                 $debtors = '';
+    //                 foreach ($debtorg as $debt) {
+    //                     if ($debt->debt_id == $row->id) {
+    //                         $debtors .= $debt->g_phone;
+    //                     }
+    //                 }
+    //                 return $debtors;
+    //             })
+    //             ->addColumn('g_id_image', function ($row) use ($debtorg) {
+    //                 $debtors = '';
+    //                 foreach ($debtorg as $debt) {
+    //                     if ($debt->debt_id == $row->id) {
+    //                         $debtors .= $debt->g_id_image;
+    //                     }
+    //                 }
+    //                 return $debtors;
+    //             })
+    //             ->rawColumns(['g_user_id', 'g_name', 'g_id', 'g_address', 'g_phone', 'g_id_image'])
+    //             ->make(true);
+    //     }
+    //     return view('page.debtor.index', ['debtor' => $data]);
+    // }
 
 
     public function store(Request $request)
