@@ -7,9 +7,58 @@ use App\Models\Debtor;
 use App\Models\g_debtors;
 use DataTables;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
 
 class DebtorController extends Controller
 {
+    public function dashboard()
+{
+    $daily = DB::table('debtors')
+            ->select('debtors.*')
+            ->where('type', 'รายวัน')
+            ->get();
+    $monthly = DB::table('debtors')
+            ->select('debtors.*')
+            ->where('type', 'รายเดือน')
+            ->get();
+    $yearly = DB::table('debtors')
+            ->select('debtors.*')
+            ->where('type', 'รายปี')
+            ->get();
+    $totalDebts = DB::table('debtors')
+            ->sum('total_debts');
+    $totalDebtsDay = DB::table('debtors')
+            ->where('type', 'รายวัน')
+            ->sum('total_debts');
+    $totalDebtsMonth = DB::table('debtors')
+            ->where('type', 'รายเดือน')
+            ->sum('total_debts');
+    $totalDebtsYear = DB::table('debtors')
+            ->where('type', 'รายปี')
+            ->sum('total_debts');
+    $data = DB::table('debtors')
+            ->select('debtors.*')
+            ->where('total_debts', '!=', 0)
+            ->get();
+    $debtors = DB::table('debtors')
+            ->select('debtors.*')
+            ->get();
+    $orders = DB::table('orders')
+            ->join('debtors', 'orders.debt_id', '=', 'debtors.id')
+            ->select('orders.*', 'debtors.*')
+            ->whereDate('end_date', '>', Carbon::now()) 
+            ->orderBy('end_date', 'asc') 
+            ->take(10)
+            ->get();
+
+    
+
+
+    
+    return view('dashboard', compact('daily','monthly','yearly','totalDebtsDay','totalDebtsMonth','totalDebtsYear','totalDebts','data','orders','debtors'));
+}
+
 
     public function index(Request $request)
     {
@@ -87,80 +136,9 @@ class DebtorController extends Controller
         }
 
         return view('page.debtor.index');
-        // return view('page.debtor.index');
     }
 
-    // public function index(Request $request)
-    // {
-    //     $data = Debtor::latest()->get();
-    //     $debtorg = g_debtors::all();
-
-
-    //     if ($request->ajax()) {
-    //         $data = Debtor::latest()->get();
-    //         return DataTables()->of($data)
-    //             ->addColumn('g_user_id', function ($row) use ($debtorg) {
-    //                 $debtors = '';
-    //                 foreach ($debtorg as $debt) {
-    //                     if ($debt->debt_id == $row->id) {
-    //                         $debtors .= $debt->id;
-    //                     }
-    //                 }
-    //                 return $debtors;
-    //             })
-
-    //             ->addColumn('g_id', function ($row) use ($debtorg) {
-    //                 $debtors = '';
-    //                 foreach ($debtorg as $debt) {
-    //                     if ($debt->debt_id == $row->id) {
-    //                         $debtors .= $debt->g_id;
-    //                     }
-    //                 }
-    //                 return $debtors;
-    //             })
-
-    //             ->addColumn('g_name', function ($row) use ($debtorg) {
-    //                 $debtors = '';
-    //                 foreach ($debtorg as $debt) {
-    //                     if ($debt->debt_id == $row->id) {
-    //                         $debtors .= $debt->g_name;
-    //                     }
-    //                 }
-    //                 return $debtors;
-    //             })
-    //             ->addColumn('g_address', function ($row) use ($debtorg) {
-    //                 $debtors = '';
-    //                 foreach ($debtorg as $debt) {
-    //                     if ($debt->debt_id == $row->id) {
-    //                         $debtors .= $debt->g_address;
-    //                     }
-    //                 }
-    //                 return $debtors;
-    //             })
-    //             ->addColumn('g_phone', function ($row) use ($debtorg) {
-    //                 $debtors = '';
-    //                 foreach ($debtorg as $debt) {
-    //                     if ($debt->debt_id == $row->id) {
-    //                         $debtors .= $debt->g_phone;
-    //                     }
-    //                 }
-    //                 return $debtors;
-    //             })
-    //             ->addColumn('g_id_image', function ($row) use ($debtorg) {
-    //                 $debtors = '';
-    //                 foreach ($debtorg as $debt) {
-    //                     if ($debt->debt_id == $row->id) {
-    //                         $debtors .= $debt->g_id_image;
-    //                     }
-    //                 }
-    //                 return $debtors;
-    //             })
-    //             ->rawColumns(['g_user_id', 'g_name', 'g_id', 'g_address', 'g_phone', 'g_id_image'])
-    //             ->make(true);
-    //     }
-    //     return view('page.debtor.index', ['debtor' => $data]);
-    // }
-
+   
 
     public function store(Request $request)
     {
