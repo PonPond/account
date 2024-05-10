@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DebtorController;
+use App\Http\Controllers\DebtorSearchController;
 use App\Http\Controllers\DebtorMController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
@@ -22,8 +23,8 @@ Route::middleware([
     //     return view('dashboard');
     // })->name('dashboard');
     Route::get('/dashboard', [DebtorController::class, 'dashboard'])->name('dashboard');
-
-
+    
+    
     Route::get('/debtor', [DebtorController::class, 'index'])->name('debtor.index');
     // Route::get('/debtor', [DebtorController::class, 'index'])->name('debtor.index');
     Route::post('/debtors/store', [DebtorController::class, 'store'])->name('debtors.store');
@@ -31,6 +32,8 @@ Route::middleware([
     Route::post('/debtors/storeg', [DebtorController::class, 'storeg'])->name('deb.storeg');
     Route::get('/debtors/storeg/{id}', [DebtorController::class, 'delete']);
     Route::get('/debtors/delete/{id}', [DebtorController::class, 'deleteb']);
+
+    Route::get('/debtors/search', [DebtorSearchController::class, 'index'])->name('debtors.index');
 
 
     Route::get('/debtor-d', [DebtorMController::class, 'indexD'])->name('debtord.index');
