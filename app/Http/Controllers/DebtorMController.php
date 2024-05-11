@@ -30,6 +30,8 @@ class DebtorMController extends Controller
         }
         return view('page.debtorD.index');
     }
+
+
     public function index(Request $request)
     {
         $data = DB::table('debtors')
@@ -44,6 +46,7 @@ class DebtorMController extends Controller
         }
         return view('page.debtorM.index');
     }
+
     public function indexY(Request $request)
     {
         $data = DB::table('debtors')
@@ -60,10 +63,7 @@ class DebtorMController extends Controller
         return view('page.debtorY.index');
     }
     
-    public function notify()
-    {
-        Line::send('ทดสอบ');
-    }
+   
 
     public function read($id)
     {

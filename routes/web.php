@@ -8,6 +8,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SummarysController;
 use App\Http\Controllers\RemarkController;
+use App\Http\Controllers\LineController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -46,7 +47,6 @@ Route::middleware([
     Route::post('/debtors-m/update/money/{id}', [DebtorMController::class, 'updatemoney']);
     Route::post('/debtors-m/update/final/{id}', [DebtorMController::class, 'updatefinal']);
     
-    Route::get('/check-zero-values', [DebtorMController::class, 'notify']);
 
 
   
@@ -68,4 +68,7 @@ Route::middleware([
     Route::post('/remark/store', [RemarkController::class, 'store'])->name('remark.store');
     Route::get('/remark/delete/{id}', [RemarkController::class, 'delete'])->name('remark.delete');
 
+    Route::get('/line', [LineController::class, 'index'])->name('line.index');
+
+    Route::get('/notify', [LineController::class, 'notify'])->name('line.notify');
 });

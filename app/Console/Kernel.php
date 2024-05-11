@@ -14,11 +14,9 @@ class Kernel extends ConsoleKernel
     {
 
       
-
-        // $schedule->call(function () {
-        //     // เรียกใช้งานฟังก์ชันใน Controller
-        //     app('App\Http\Controllers\DebtorMController')->notify();
-        // })->everyTenSeconds(); // เรียกใช้งานทุก 10 วินาที
+        $schedule->call(function () {
+            app('App\Http\Controllers\LineController')->notify();
+        })->everyTenSeconds()->name('monthly-notification')->withoutOverlapping(); // เรียกใช้งานทุก 10 วินาที
     }
 
     /**
