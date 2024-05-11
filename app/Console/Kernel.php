@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
       
         $schedule->call(function () {
             app('App\Http\Controllers\LineController')->notify();
-        })->everyTenSeconds()->name('monthly-notification')->withoutOverlapping(); // เรียกใช้งานทุก 10 วินาที
+        })->monthly()->name('monthly-notification')->withoutOverlapping(); // เรียกใช้งานทุก 10 วินาที
     }
 
     /**
