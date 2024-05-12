@@ -9,6 +9,7 @@ use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SummarysController;
 use App\Http\Controllers\RemarkController;
 use App\Http\Controllers\LineController;
+use App\Http\Controllers\SmartCardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -70,4 +71,10 @@ Route::middleware([
     Route::get('/line', [LineController::class, 'index'])->name('line.index');
 
     Route::get('/notify', [LineController::class, 'notify'])->name('line.notify');
-});
+
+
+    Route::get('/smartcard', [SmartCardController::class, 'index'])->name('smartcard.index');;
+    Route::get('/smartcard/init', [SmartCardController::class, 'init']);
+    Route::post('/smartcard/query', [SmartCardController::class, 'setQuery']);
+    Route::get('/smartcard/query/all', [SmartCardController::class, 'setAllQuery']);
+    });
