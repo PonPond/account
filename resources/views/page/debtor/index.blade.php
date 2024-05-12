@@ -136,6 +136,8 @@
                                     <th class="text-uppercase  text-md font-weight-bolder opacity-7 text-center">
                                         เบอร์โทร</th>
                                     <th class="text-uppercase  text-md font-weight-bolder opacity-7 text-center">
+                                        เลขบัตรประชาชน</th>
+                                    <th class="text-uppercase  text-md font-weight-bolder opacity-7 text-center">
                                         ดอกเบี้ย/เปอร์เซ็น</th>
                                     <th class="text-uppercase  text-md font-weight-bolder opacity-7 text-center">ประเภท
                                     </th>
@@ -211,6 +213,11 @@
                 {
                     data: 'debtors_phone',
                     name: 'debtors_phone',
+                    className: 'text-center'
+                },
+                {
+                    data: 'debtors_id',
+                    name: 'debtors_id',
                     className: 'text-center'
                 },
                 {
@@ -506,7 +513,13 @@
             destroy: true,
         });
     });
+    $(document).ready(function() {
+        // เลือกช่อง input ชื่อ-นามสกุล ลูกหนี้
+        var debtorsNameInput = $('input[name="debtors_name"]');
 
+        // เมื่อฟิกเคอร์เซอร์เปิดขึ้นมา
+        debtorsNameInput.focus();
+    });
     function confirmDelete(id) {
         if (confirm('ลบหรือไม่ ?')) {
             fetch(`{{ url('/debtors/storeg/') }}/${id}`, {

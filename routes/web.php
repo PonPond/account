@@ -34,7 +34,6 @@ Route::middleware([
     Route::get('/debtors/storeg/{id}', [DebtorController::class, 'delete']);
     Route::get('/debtors/delete/{id}', [DebtorController::class, 'deleteb']);
 
-    Route::get('/debtors/search', [DebtorSearchController::class, 'index'])->name('debtors.index');
 
 
     Route::get('/debtor-d', [DebtorMController::class, 'indexD'])->name('debtord.index');
