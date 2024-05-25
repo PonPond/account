@@ -12,6 +12,10 @@
             <div class="card mb-4">
                 <div class="card-header pb-0">
                     <h6>ข้อมูลลูกหนี้</h6>
+                 
+                <a href="http://localhost:8080/read-smartcard" target="_blank" class="btn btn-primary">1.ดึงข้อมูล</a>
+                <button type="button" class="btn btn-primary" onclick="fetchData()">2.อ่านข้อมูลจากบัตร</button>
+
                 </div>
                 <div class="card-body">
 
@@ -132,6 +136,7 @@
                         <table class="table align-items-center mb-0 w-100 mx-0" id="myTable">
                             <thead>
                                 <tr>
+                                    <th class="text-uppercase  text-md font-weight-bolder opacity-7">รูป</th>
                                     <th class="text-uppercase  text-md font-weight-bolder opacity-7">ชื่อ-ที่อยู่</th>
                                     <th class="text-uppercase  text-md font-weight-bolder opacity-7 text-center">
                                         เบอร์โทร</th>
@@ -170,6 +175,56 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
+<script>
+    function fetchData() {
+        fetch('/get-smartcard', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // นำข้อมูลที่ได้มาใส่ในฟอร์ม
+            var jsonData = JSON.parse(data)
+            console.log(jsonData.data.Prefix);
+            document.querySelector('input[name="debtors_name"]').value = jsonData.data.FirstName + ' ' + jsonData.data.LastName;
+            document.querySelector('input[name="debtors_address"]').value = 
+            jsonData.data.HouseNo + ' ' +"ม."+jsonData.data.Moo+ ' ' + "ต."+jsonData.data.Subdistrict +' '+"อ."+ jsonData.data.District+ ' ' + jsonData.data.Province;
+            document.querySelector('input[name="debtors_id"]').value = jsonData.data.Cid;
+            document.querySelector('input[name="debtors_phone"]').value = "-";
+            document.querySelector('input[name="debtors_id_image"]').value = jsonData.data.Base64Img; // แนะนำ: อาจจะต้องแสดงรูปภาพอย่างแตกต่าง
+        })
+        .catch(error => console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error));
+    }
+
+</script>
+
+<script>
+    function fetchDataG() {
+        fetch('/get-smartcard', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // นำข้อมูลที่ได้มาใส่ในฟอร์ม
+            var jsonData = JSON.parse(data)
+            console.log(jsonData.data.Prefix);
+            document.querySelector('input[name="g_name"]').value = jsonData.data.FirstName + ' ' + jsonData.data.LastName;
+            document.querySelector('input[name="g_address"]').value = 
+            jsonData.data.HouseNo + ' ' +"ม."+jsonData.data.Moo+ ' ' + "ต."+jsonData.data.Subdistrict +' '+"อ."+ jsonData.data.District+ ' ' + jsonData.data.Province;
+            document.querySelector('input[name="g_id"]').value = jsonData.data.Cid;
+            document.querySelector('input[name="g_phone"]').value = "-";
+            document.querySelector('input[name="g_id_image"]').value = jsonData.data.Base64Img; // แนะนำ: อาจจะต้องแสดงรูปภาพอย่างแตกต่าง
+        })
+        .catch(error => console.error('เกิดข้อผิดพลาดในการดึงข้อมูล:', error));
+    }
+</script>
+
+
 
 <!-- <script>
         $(document).ready(function() {
@@ -205,8 +260,27 @@
 
             columns: [
                 {
+                    data: 'debtors_id_image',
+                    render: function(data, type, row) {
+                    var image = row.debtors_id_image; // ดึงข้อมูลจากคอลัมน์ debtors_id_image
+                    // ตรวจสอบว่าข้อมูลรูปภาพไม่เป็น null และไม่ว่าง
+                    if (image) {
+                        // สร้าง element <img> เพื่อแสดงรูปภาพ
+                        if(image == "-"){
+                            return 'ไม่มีรูป';
+                        }else{
+                            return '<img src="data:image/png;base64,' + image + '" alt="Image" style="max-width:100px; max-height:100px;">';
+                        }
+                        
+                    } else {
+                        return ''; // หรือสามารถใส่ข้อความว่างเปล่าก็ได้
+                    }
+                }
+                },
+                {
                     data: 'debtors_name' || 'debtors_address',
                     render: function(data, type, row) {
+                        
                         return row.debtors_name + '<br> ' + row.debtors_address;
                     }
                 }, 
@@ -294,7 +368,7 @@
                                                             <div class="form-group">
                                                                 <label for="exampleFormControlInput1">ลิงค์รูปบัตรประชาชน
                                                                 </label>
-                                                                <input type="text" class="form-control" name="debtors_id_image" style="color: black; font-weight: bold;" value="${row.debtors_id_image}">
+                                                                <input type="text" class="form-control" name="debtors_id_image" style="color: black; font-weight: bold;" value="${row.debtors_id_image}" disabled>
                                                             </div>
 
                                                             <div class="form-group">
@@ -334,7 +408,15 @@
                                                 <span class="mb-2 text-xl"><span class="text-dark font-weight-bold ms-sm-4">${row.g_address}</span></span>
                                                 <span class="mb-2 text-xl">${row.g_phone}</span>
                                                 <span class="mb-2 text-xl">${row.g_id}</span>
-                                                <span class="text-xs"><span class="text-dark ms-sm-2 font-weight-bold"><a href="${row.g_id_image}" target="_blank">ลิงค์รูปบัตรประชาชน</a></span></span>
+                                                <span class="text-xs">
+                              
+                                                <img src="data:image/png;base64,${row.g_id_image}" alt="Image" style="max-width:100px; max-height:100px;">
+                                                
+                                                <span class="text-dark ms-sm-2 font-weight-bold">
+                                                
+                                                
+                                            
+                                                </span></span>
                                             </div>
                                             <div align="right" >
                                             <button  type="button" class="btn btn-link text-danger" onclick="confirmDelete(${row.g_user_id})">
@@ -415,7 +497,7 @@
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel">
                                                             เพิ่มข้อมูลคนค้ำประกัน </h5>
-
+                                                        <button type="button" class="btn btn-primary" onclick="fetchDataG()">อ่านข้อมูลจากบัตร</button>
                                                     </div>
                                                     <div class="modal-body">
 

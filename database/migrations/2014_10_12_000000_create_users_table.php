@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('debtors_address');
             $table->string('debtors_id');
             $table->string('debtors_phone');
-            $table->string('debtors_id_image');
+            $table->text('debtors_id_image');
             $table->string('type');
             $table->string('per');
             $table->string('total_debts')->default(0)->nullable();
@@ -46,7 +46,7 @@ return new class extends Migration
             $table->string('g_address')->nullable();
             $table->string('g_id')->nullable();
             $table->string('g_phone')->nullable();
-            $table->string('g_id_image')->nullable();
+            $table->text('g_id_image')->nullable();
             $table->foreign('debt_id')->references('id')->on('debtors')->onDelete('cascade');
             $table->timestamps();
         });

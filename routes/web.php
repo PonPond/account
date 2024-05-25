@@ -35,6 +35,11 @@ Route::middleware([
     Route::get('/debtors/storeg/{id}', [DebtorController::class, 'delete']);
     Route::get('/debtors/delete/{id}', [DebtorController::class, 'deleteb']);
 
+    Route::get('/new-page', [SmartcardController::class, 'showNewPage'])->name('new.page');
+    Route::get('/fetch-smartcard-data', [SmartcardController::class, 'fetchData'])->name('fetch.smartcard.data');
+
+    Route::get('/get-smartcard', [SmartcardController::class, 'getSmartcard']);
+
 
 
     Route::get('/debtor-d', [DebtorMController::class, 'indexD'])->name('debtord.index');
