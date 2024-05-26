@@ -65,8 +65,21 @@
                 },
                 {
                     data: 'debtors_id_image',
-                    name: 'debtors_id_image',
-                    className: 'text-center'
+                    render: function(data, type, row) {
+                    var image = row.debtors_id_image; // ดึงข้อมูลจากคอลัมน์ debtors_id_image
+                    // ตรวจสอบว่าข้อมูลรูปภาพไม่เป็น null และไม่ว่าง
+                    if (image) {
+                        // สร้าง element <img> เพื่อแสดงรูปภาพ
+                        if(image == "-"){
+                            return 'ไม่มีรูป';
+                        }else{
+                            return '<img src="data:image/png;base64,' + image + '" alt="Image" style="max-width:100px; max-height:100px;">';
+                        }
+                        
+                    } else {
+                        return ''; // หรือสามารถใส่ข้อความว่างเปล่าก็ได้
+                    }
+                }
                 },
                
                 {
