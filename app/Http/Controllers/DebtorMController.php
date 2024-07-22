@@ -179,7 +179,8 @@ class DebtorMController extends Controller
        
       
         if (!empty($deb3[0])) {
-            $per = $this->calculateInterestAndDays($deb5->debt_id, $deb3[0]->id);
+
+            $per = $this->calculateInterestAndDays($deb5->debt_id, $deb3[0]->id,$id);
             $day = $per['daysPassed'];
             $fullper = $per['interestInFullPeriods'];
             $rday = $per['interestInRemainingDays'];
@@ -222,13 +223,15 @@ class DebtorMController extends Controller
     }
 
 
-    protected function calculateInterestAndDays($debtorId, $orderId)
+    protected function calculateInterestAndDays($debtorId, $orderId,$deb_roundId)
     {
 
     $findDeb = Debtor::find($debtorId);
     $order = Orders::find($orderId);
+    $sumAmount = dd_payment::where('debt_id', $debtorId)
+    ->where('debt_rounds_id', '=', $deb_roundId)
+    ->sum('amount');
 
-    
     if (!$findDeb || !$order) {
         return null;
     }
@@ -272,7 +275,7 @@ class DebtorMController extends Controller
     $interestInFullPeriods = $principalAmount * ($interestRate / 100) * $numberOfFullPeriods;
     $interestInRemainingDays = $principalAmount * ($interestRate / 100) * ($remainingDays / 30);
   
-    $totalInterest = $interestInFullPeriods + $interestInRemainingDays;
+    $totalInterest = ($interestInFullPeriods + $interestInRemainingDays) - $sumAmount;
 
     return [
         'daysPassed' => $daysPassed,
