@@ -6,8 +6,6 @@
             <div class="card-header pb-0">
                 <h6>ยอดค้างรายเดือน</h6>
 
-
-
                 @if ($deb3->count() > 0)
                     <button type="button" class="btn bg-gradient-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
                         disabled>
@@ -404,17 +402,6 @@
         </div>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
     <div class="col-12">
         <div class="card mb-4">
             <div class="card-header pb-0">
@@ -422,8 +409,8 @@
                     <div class="col-12" style=" display: flex;">
                         <h3 style="margin-right: 10px">สรุปยอดรวม</h3>
 
-
-                        <form action="{{ url('/debtors-m/update/money/' . $deb5->id) }}" method="POST"
+                        //ปรับปรุงยอด
+                        <!-- <form action="{{ url('/debtors-m/update/money/' . $deb5->id) }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
 
@@ -454,7 +441,7 @@
 
 
 
-                        </form>
+                        </form> -->
 
                         <form id="myForm" action="{{ url('/debtors-m/update/final/' . $deb5->id) }}" method="POST"
                             enctype="multipart/form-data">

@@ -106,8 +106,6 @@ class DebtorMController extends Controller
 
     public function updatemoney(Request $request, $id)
     {
-      
-        
         debt_rounds::find($id)->update([
             'round_amount' => $request->round_amount,
             'round_interest' => $request->round_interest,
