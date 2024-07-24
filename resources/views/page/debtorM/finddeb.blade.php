@@ -409,8 +409,8 @@
                     <div class="col-12" style=" display: flex;">
                         <h3 style="margin-right: 10px">สรุปยอดรวม</h3>
 
-                        //ปรับปรุงยอด
-                        <!-- <form action="{{ url('/debtors-m/update/money/' . $deb5->id) }}" method="POST"
+
+                        <form action="{{ url('/debtors-m/update/money/' . $deb5->id) }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
 
@@ -441,7 +441,7 @@
 
 
 
-                        </form> -->
+                        </form>
 
                         <form id="myForm" action="{{ url('/debtors-m/update/final/' . $deb5->id) }}" method="POST"
                             enctype="multipart/form-data">

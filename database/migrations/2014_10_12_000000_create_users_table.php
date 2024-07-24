@@ -39,6 +39,8 @@ return new class extends Migration
             $table->timestamps();
         });
 
+      
+
         Schema::create('g_debtors', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('debt_id');
@@ -63,6 +65,7 @@ return new class extends Migration
             $table->foreign('debt_id')->references('id')->on('debtors')->onDelete('cascade');
         });
 
+    
         Schema::create('remarks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('debt_id')->nullable();
@@ -123,6 +126,21 @@ return new class extends Migration
         });
 
         
+        Schema::create('transitions', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('debt_id');
+            $table->unsignedBigInteger('debt_rounds_id')->nullable();
+            $table->string('count_date_stuck');
+            $table->string('interest_value');
+            $table->decimal('interest_month', 10, 2);
+            $table->decimal('interest_date', 10, 2);
+            $table->decimal('interest_total', 10, 2);
+            $table->foreign('debt_id')->references('id')->on('debtors')->onDelete('cascade');
+            $table->foreign('debt_rounds_id')->references('id')->on('debt_rounds')->nullable();
+            $table->timestamps();
+        });
+        
+    
 
     }
 
