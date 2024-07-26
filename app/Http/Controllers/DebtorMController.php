@@ -229,7 +229,7 @@ class DebtorMController extends Controller
       
         $summary = Summarys::where('debt_id', $findDeb->id)
         ->where('debt_rounds_id', '=', $order->debt_rounds_id)
-        ->orderBy('created_at', 'desc') 
+        ->orderBy('id', 'desc') 
         ->first();
        
         $startDate = Carbon::parse($summary->created_at);
@@ -238,9 +238,10 @@ class DebtorMController extends Controller
     $now = Carbon::now();
     $daysPassed = $now->diffInDays($startDate);
 
+    // dd($daysPassed);
     $summary = Summarys::where('debt_id', $findDeb->id)
     ->where('debt_rounds_id', '=', $order->debt_rounds_id)
-    ->orderBy('created_at', 'desc') 
+    ->orderBy('id', 'desc') 
     ->first();
 
     if($summary !== null){
@@ -249,14 +250,16 @@ class DebtorMController extends Controller
         $principalAmount = $order->total_price;
     }
 
+  
     $interestRate = $findDeb->per;
    
     $numberOfFullPeriods = floor($daysPassed / 30);
     $remainingDays = $daysPassed % 30;
 
     $interestInFullPeriods = $principalAmount * ($interestRate / 100) * $numberOfFullPeriods;
+    
     $interestInRemainingDays = $principalAmount * ($interestRate / 100) * ($remainingDays / 30);
-
+    
     // dd($interestInRemainingDays,$interestInFullPeriods,$sumAmount);
 
     $totalInterest = ($interestInFullPeriods + $interestInRemainingDays);

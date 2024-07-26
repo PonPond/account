@@ -630,7 +630,6 @@
                     </div>
                     <div class="col-6">
 
-                     
                         <h4>จำนวนดอกเบี้ยติดค้างคงเหลือ: {{ number_format($transitionsTotalSum + $totalint, 2) -$totalsumdd }}</h4>
 
                             <span>
