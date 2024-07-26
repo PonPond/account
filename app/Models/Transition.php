@@ -13,7 +13,7 @@ class Transition extends Model
         'debt_id',
         'debt_rounds_id',
         'count_date_stuck',
-        'interest_value',
+        'money_index',
         'interest_month',
         'interest_date',
         'interest_total',

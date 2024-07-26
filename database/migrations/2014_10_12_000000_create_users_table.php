@@ -131,7 +131,7 @@ return new class extends Migration
             $table->unsignedBigInteger('debt_id');
             $table->unsignedBigInteger('debt_rounds_id')->nullable();
             $table->string('count_date_stuck');
-            $table->string('interest_value');
+            $table->string('money_index');
             $table->decimal('interest_month', 10, 2);
             $table->decimal('interest_date', 10, 2);
             $table->decimal('interest_total', 10, 2);

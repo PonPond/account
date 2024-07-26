@@ -10,6 +10,7 @@ use App\Models\Summarys;
 use App\Models\debt_rounds;
 use App\Models\dd_payment;
 use App\Models\remark;
+use App\Models\Transition;
 use Carbon\Carbon;
 use Phattarachai\LineNotify\Facade\Line;
 use Illuminate\Support\Facades\DB;
@@ -63,8 +64,6 @@ class DebtorMController extends Controller
         return view('page.debtorY.index');
     }
     
-   
-
     public function read($id)
     {
         $deb1 = Debtor::find($id);
@@ -115,17 +114,17 @@ class DebtorMController extends Controller
     }
 
 
-
     public function readdeb($id)
     {
         
     
         $deb1 = Debtor::find($id);    
         $deb5 = debt_rounds::find($id);
+
         $deb3 = Orders::where('debt_id', $deb5->debt_id)
         ->where('debt_rounds_id', '=', $deb5->id)
         ->get();
-       
+
         $deb8 = Orders::where('debt_id', $deb5->debt_id)
         ->where('debt_rounds_id', '=', $deb5->id)
         ->first();
@@ -142,6 +141,9 @@ class DebtorMController extends Controller
         ->where('debt_rounds_id', '=', $deb5->id)
         ->get();
 
+        $sumAmount = $deb2->sum('amount');
+
+
         $totalsum = $deb2->sum('amount');
 
         $dd_payment = dd_payment::where('debt_id', $deb5->debt_id)
@@ -155,7 +157,16 @@ class DebtorMController extends Controller
         ->where('debt_rounds_id', '=', $deb5->id)
         ->orderBy('created_at', 'desc') 
         ->get();
-      
+
+
+        $transitions = Transition::where('debt_id', $deb5->debt_id)
+        ->where('debt_rounds_id', '=', $deb5->id)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        $transitionsTotalSum = $transitions->sum('interest_total');
+  
+
         $totalAmountD = $deb7->sum('amount_d');
         
         $totalAmountDCP = $deb7->sum('amount_d');
@@ -183,6 +194,7 @@ class DebtorMController extends Controller
             $fullper = $per['interestInFullPeriods'];
             $rday = $per['interestInRemainingDays'];
             $totalint = $per['totalInterest'];
+            // dd($fullper, $rday, $totalint);
         } else {
             $per = null;  
             $day = null;
@@ -192,35 +204,10 @@ class DebtorMController extends Controller
         }
       
         
-        return view('page.debtorM.finddeb', compact('deb1','deb2','deb3','deb4','deb5','deb6','deb7','deb8','totalAmountD','fullM','fullD','per','day','fullper','rday','totalint','totalsum','remark','dd_payment','totalsumdd','totalAmountDCP'));
+        return view('page.debtorM.finddeb', compact('deb1','deb2','deb3','deb4','deb5','deb6','deb7','deb8','totalAmountD','fullM','fullD','per','day','fullper','rday','totalint','totalsum','remark','dd_payment','totalsumdd','totalAmountDCP','transitions','transitionsTotalSum','sumAmount'));
     }
 
     
-    protected function calculateRemainingPeriods($endDateString, $daysInEachPeriod = 30)
-    {
-        try {
-            $endDate = Carbon::parse($endDateString);
-            $now = Carbon::now();
-            $remainingDays = $now->diffInDays($endDate);
-            // คำนวณจำนวนรอบที่เต็ม
-            $fullM = intdiv($remainingDays, $daysInEachPeriod);
-            // คำนวณวันที่เหลือหลังจากที่มีรอบเต็ม
-            $fullD = $remainingDays % $daysInEachPeriod;
-    
-            // ตรวจสอบว่าวันที่ในอนาคตเป็นอดีตหรือไม่
-            if ($endDate->isPast()) {
-                $fullM *= -1;
-                $fullD *= -1;
-            }
-    
-            return ['fullM' => $fullM, 'fullD' => $fullD];
-        } catch (\Exception $e) {
-            // จัดการกับข้อผิดพลาด, เช่น ล็อก, ส่งอีเมล์, หรือคืนค่าที่เหมาะสม
-            return null;
-        }
-    }
-
-
     protected function calculateInterestAndDays($debtorId, $orderId,$deb_roundId)
     {
 
@@ -234,8 +221,9 @@ class DebtorMController extends Controller
         return null;
     }
 
+
+    #คำนวณวันที่ติดหนี้ 
     if($order->amount == 0){
-       
         $startDate = Carbon::parse($order->created_at);
     }else{
       
@@ -247,8 +235,6 @@ class DebtorMController extends Controller
         $startDate = Carbon::parse($summary->created_at);
     }
 
-
-
     $now = Carbon::now();
     $daysPassed = $now->diffInDays($startDate);
 
@@ -258,23 +244,23 @@ class DebtorMController extends Controller
     ->first();
 
     if($summary !== null){
- 
         $principalAmount =$order->amount;
     }else{
         $principalAmount = $order->total_price;
     }
 
-   
-
     $interestRate = $findDeb->per;
+   
     $numberOfFullPeriods = floor($daysPassed / 30);
     $remainingDays = $daysPassed % 30;
-    
+
     $interestInFullPeriods = $principalAmount * ($interestRate / 100) * $numberOfFullPeriods;
     $interestInRemainingDays = $principalAmount * ($interestRate / 100) * ($remainingDays / 30);
-  
-    $totalInterest = ($interestInFullPeriods + $interestInRemainingDays) - $sumAmount;
 
+    // dd($interestInRemainingDays,$interestInFullPeriods,$sumAmount);
+
+    $totalInterest = ($interestInFullPeriods + $interestInRemainingDays);
+    
     return [
         'daysPassed' => $daysPassed,
         'interestInFullPeriods' => $interestInFullPeriods,
@@ -284,7 +270,29 @@ class DebtorMController extends Controller
 }
 
 
+protected function calculateRemainingPeriods($endDateString, $daysInEachPeriod = 30)
+{
+    try {
+        $endDate = Carbon::parse($endDateString);
+        $now = Carbon::now();
+        $remainingDays = $now->diffInDays($endDate);
+        // คำนวณจำนวนรอบที่เต็ม
+        $fullM = intdiv($remainingDays, $daysInEachPeriod);
+        // คำนวณวันที่เหลือหลังจากที่มีรอบเต็ม
+        $fullD = $remainingDays % $daysInEachPeriod;
 
+        // ตรวจสอบว่าวันที่ในอนาคตเป็นอดีตหรือไม่
+        if ($endDate->isPast()) {
+            $fullM *= -1;
+            $fullD *= -1;
+        }
+
+        return ['fullM' => $fullM, 'fullD' => $fullD];
+    } catch (\Exception $e) {
+        // จัดการกับข้อผิดพลาด, เช่น ล็อก, ส่งอีเมล์, หรือคืนค่าที่เหมาะสม
+        return null;
+    }
+}
 
     
 }

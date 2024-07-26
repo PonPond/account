@@ -158,7 +158,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มรายการหนี้รายเดือน</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มการชำระ</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -332,7 +332,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มรายการหนี้รายเดือน</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มการชำระนะ</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -351,18 +351,22 @@
                         <input type="hidden" class="form-control" name="debt_id" value="{{ $deb5->debt_id }}">
                         <input type="hidden" class="form-control" id="exampleFormControlInput1" name="amount_d"
                             value="{{ $totalint }}">
+
+                        <input type="hidden" class="form-control" name="count_date_stuck" value="{{ $day}}">
+                        <input type="hidden" class="form-control" name="money_index" value="{{ $deb8->total_price - $sumAmount }}">
+                        <input type="hidden" class="form-control" name="interest_month" value="{{ $fullper}}">
+                        <input type="hidden" class="form-control" name="interest_date" value="{{ $rday }}">
+                        <input type="hidden" class="form-control" name="interest_total" value="{{ $totalint }}">
                         <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
+
+                        
                         <button type="submit" class="btn bg-gradient-primary">Save
                             changes</button>
                     </form>
 
-                    </form>
-
-
                 </div>
             </div>
         </div>
-
     </div>
 
     <div class="modal fade" id="exampleModalDD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -508,6 +512,8 @@
                     </div>
                     <div class="col-6">
 
+                
+
                         จำนวนเงินดอกเบี้ยคิดรายวัน: {{ number_format($rday, 2) }} บาท <br>
                         จำนวนเงินรวมของดอกเบี้ย: {{ number_format($totalint, 2) }} บาท
                     </div>
@@ -518,8 +524,8 @@
                     <div class="col-6">
 
                         @if ($deb8)
-                            @if ($deb2->count() <= 0)
-                                <h4>จำนวนเงินต้น ติดค้างคงเหลือ: {{ $deb8->total_price }} บาท
+                       
+                                <h4>จำนวนเงินต้น ติดค้างคงเหลือ: {{ $deb8->total_price - $sumAmount }} บาท
                                     <span>
 
                                         <button type="button" class="btn bg-gradient-success" data-bs-toggle="modal"
@@ -541,31 +547,9 @@
 
                                                             <div class="row">
                                                                 <div class="col-12" style=" display: flex;">
-                                                                    <h5 class="mt-2" style="margin-right: 10px;">
-                                                                        ยอดจ่ายเงินต้น</h5>
+                                                                    <h5 class="mt-2" style="margin-right: 10px;">ยอดจ่ายเงินต้น</h5>
 
                                                                     @if ($deb8)
-                                                                        @if ($totalsum == $deb8->total_price)
-                                                                            <button type="button"
-                                                                                class="btn bg-gradient-primary"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#exampleModal1" disabled>
-                                                                                เพิ่มการจ่ายเงินต้น
-                                                                            </button>
-
-                                                                            <button type="button"
-                                                                                class="btn bg-gradient-success">
-                                                                                ชำระเงินต้นครบแล้ว
-                                                                            </button>
-                                                                        @else
-                                                                            <button type="button"
-                                                                                class="btn bg-gradient-primary"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#exampleModal1">
-                                                                                เพิ่มการจ่ายเงินต้น
-                                                                            </button>
-                                                                        @endif
-                                                                    @else
                                                                         <button type="button"
                                                                             class="btn bg-gradient-primary"
                                                                             data-bs-toggle="modal"
@@ -576,64 +560,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="modal fade" id="exampleModal1" tabindex="-1"
-                                                                role="dialog" aria-labelledby="exampleModalLabel"
-                                                                aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered"
-                                                                    role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title"
-                                                                                id="exampleModalLabel">
-                                                                                เพิ่มรายการหนี้รายเดือน</h5>
-                                                                            <button type="button" class="btn-close"
-                                                                                data-bs-dismiss="modal"
-                                                                                aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-
-                                                                            <form action="{{ route('payment.store') }}"
-                                                                                method="POST"
-                                                                                enctype="multipart/form-data">
-                                                                                @csrf
-                                                                                <div class="form-group">
-                                                                                    <label
-                                                                                        for="exampleFormControlInput1">ยอดเงิน</label>
-                                                                                    <input type="text"
-                                                                                        class="form-control"
-                                                                                        id="exampleFormControlInput1"
-                                                                                        name="amount">
-                                                                                </div>
-
-
-                                                                                <input type="hidden" class="form-control"
-                                                                                    name="debt_rounds_id"
-                                                                                    value="{{ $deb5->id }}">
-                                                                                <input type="hidden" class="form-control"
-                                                                                    name="debt_id"
-                                                                                    value="{{ $deb5->debt_id }}">
-                                                                                <input type="hidden" class="form-control"
-                                                                                    id="exampleFormControlInput1"
-                                                                                    name="amount_d"
-                                                                                    value="{{ $totalint }}">
-                                                                                <button type="button"
-                                                                                    class="btn bg-gradient-secondary"
-                                                                                    data-bs-dismiss="modal">Close</button>
-                                                                                <button type="submit"
-                                                                                    class="btn bg-gradient-primary">Save
-                                                                                    changes</button>
-                                                                            </form>
-
-                                                                            </form>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
+                                                          
 
                                                             <div class="card-body px-0 pt-0 pb-2">
                                                                 <div class="table-responsive p-0">
@@ -691,180 +618,7 @@
 
                                     </div>
                                 </h4>
-                            @else
-                                <h4>จำนวนเงินต้น ติดค้างคงเหลือ: {{ $deb8->amount }} บาท
-                                    <span>
-
-                                        <button type="button" class="btn bg-gradient-warning" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModalDebtors">
-                                            เงินต้น
-                                        </button>
-                                    </span>
-                                    <div class="modal fade" id="exampleModalDebtors" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-                                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                                            <div class="modal-content">
-
-                                                <div class="modal-body">
-
-                                                    <div class="card mb-4">
-
-                                                        <div class="card-header pb-0">
-
-                                                            <div class="row">
-                                                                <div class="col-12" style=" display: flex;">
-                                                                    <h5 class="mt-2" style="margin-right: 10px;">
-                                                                        ยอดจ่ายเงินต้น</h5>
-
-                                                                    @if ($deb8)
-                                                                        @if ($totalsum == $deb8->total_price)
-                                                                            <button type="button"
-                                                                                class="btn bg-gradient-primary"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#exampleModal1" disabled>
-                                                                                เพิ่มการจ่ายเงินต้น
-                                                                            </button>
-
-                                                                            <button type="button"
-                                                                                class="btn bg-gradient-success">
-                                                                                ชำระเงินต้นครบแล้ว
-                                                                            </button>
-                                                                        @else
-                                                                            <button type="button"
-                                                                                class="btn bg-gradient-primary"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#exampleModal1">
-                                                                                เพิ่มการจ่ายเงินต้น
-                                                                            </button>
-                                                                        @endif
-                                                                    @else
-                                                                        <button type="button"
-                                                                            class="btn bg-gradient-primary"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal1">
-                                                                            เพิ่มการจ่ายเงินต้น
-                                                                        </button>
-                                                                    @endif
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="modal fade" id="exampleModal1" tabindex="-1"
-                                                                role="dialog" aria-labelledby="exampleModalLabel"
-                                                                aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered"
-                                                                    role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title"
-                                                                                id="exampleModalLabel">
-                                                                                เพิ่มรายการหนี้รายเดือน</h5>
-                                                                            <button type="button" class="btn-close"
-                                                                                data-bs-dismiss="modal"
-                                                                                aria-label="Close">
-                                                                                <span aria-hidden="true">&times;</span>
-                                                                            </button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-
-                                                                            <form action="{{ route('payment.store') }}"
-                                                                                method="POST"
-                                                                                enctype="multipart/form-data">
-                                                                                @csrf
-                                                                                <div class="form-group">
-                                                                                    <label
-                                                                                        for="exampleFormControlInput1">ยอดเงิน</label>
-                                                                                    <input type="text"
-                                                                                        class="form-control"
-                                                                                        id="exampleFormControlInput1"
-                                                                                        name="amount">
-                                                                                </div>
-
-
-                                                                                <input type="hidden" class="form-control"
-                                                                                    name="debt_rounds_id"
-                                                                                    value="{{ $deb5->id }}">
-                                                                                <input type="hidden" class="form-control"
-                                                                                    name="debt_id"
-                                                                                    value="{{ $deb5->debt_id }}">
-                                                                                <input type="hidden" class="form-control"
-                                                                                    id="exampleFormControlInput1"
-                                                                                    name="amount_d"
-                                                                                    value="{{ $totalint }}">
-                                                                                <button type="button"
-                                                                                    class="btn bg-gradient-secondary"
-                                                                                    data-bs-dismiss="modal">Close</button>
-                                                                                <button type="submit"
-                                                                                    class="btn bg-gradient-primary">Save
-                                                                                    changes</button>
-                                                                            </form>
-
-                                                                            </form>
-
-
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-
-                                                            <div class="card-body px-0 pt-0 pb-2">
-                                                                <div class="table-responsive p-0">
-                                                                    <table class="table align-items-center mb-0">
-                                                                        <thead>
-                                                                            <tr>
-
-                                                                                <th class="text-center">วันที่จ่าย</th>
-                                                                                <th class="text-center">ยอดเงิน</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            @foreach ($deb2 as $item)
-                                                                                <tr>
-                                                                                    <td class="text-center">
-                                                                                        <h6 class="mb-0 text-md">
-                                                                                            {{ $ThaiFormat->makeFormat2($item->created_at) }}
-                                                                                        </h6>
-                                                                                    </td>
-
-                                                                                    <td class="text-center">
-                                                                                        <h6 class="mb-0 text-md">
-                                                                                            {{ $item->amount }}</h6>
-                                                                                    </td>
-
-
-                                                                                </tr>
-                                                                            @endforeach
-                                                                        </tbody>
-                                                                    </table>
-
-                                                                    <h5 style="margin-left: 60%">รวม: {{ $totalsum }}
-                                                                        บาท</h5>
-                                                                </div>
-                                                            </div>
-
-
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        </td>
-
-
-                                        </tr>
-                                        </tbody>
-                                        </table>
-
-
-                                    </div>
-                                </h4>
-                            @endif
+                        
                         @else
                             <h4>ไม่พบข้อมูลเงินต้นติดค้าง</h4>
                         @endif
@@ -876,9 +630,9 @@
                     </div>
                     <div class="col-6">
 
+                     
+                        <h4>จำนวนดอกเบี้ยติดค้างคงเหลือ: {{ number_format($transitionsTotalSum + $totalint, 2) -$totalsumdd }}</h4>
 
-
-                        <h4>จำนวนดอกเบี้ยติดค้างคงเหลือ: {{ $totalint }}
                             <span>
 
                                 <button type="button" class="btn bg-gradient-danger" data-bs-toggle="modal"
@@ -903,16 +657,6 @@
                                                             <h5 class="mt-2" style="margin-right: 10px;">
                                                                 ยอดจ่ายดอกเบี้ย</h5>
 
-
-                                                            {{-- @if ($totalAmountD == 0)
-                                                        <button type="button" class="btn bg-gradient-info" data-bs-toggle="modal" disabled data-bs-target="#exampleModalDD">
-                                                            เพิ่มการจ่ายดอกเบี้ย
-                                                        </button>
-                                                        @else
-                                                        <button type="button" class="btn bg-gradient-info" data-bs-toggle="modal" data-bs-target="#exampleModalDD">
-                                                            เพิ่มการจ่ายดอกเบี้ย
-                                                        </button>
-                                                        @endif --}}
 
                                                             <button type="button" class="btn bg-gradient-info"
                                                                 data-bs-toggle="modal" data-bs-target="#exampleModalDD">
