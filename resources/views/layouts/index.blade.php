@@ -21,9 +21,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@100&display=swap" rel="stylesheet">
     <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=3.0.4" rel="stylesheet" />
+    <link id="pagestyle" href="../assets/css/all.css" rel="stylesheet" />
+
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.12.1/datatables.min.css" />
-
 
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
@@ -111,7 +112,8 @@
                         <a class="nav-link active" href="{{ route('debtor.index') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-hand-holding-usd text-primary text-sm opacity-10"></i>
+                                <img src="{{ asset('assets/icon/user.svg') }}" alt="Hand Holding USD Icon"
+                                    class="text-primary text-sm opacity-10">
                             </div>
                             <span class="nav-link-text ms-1">ข้อมูลลูกหนี้</span>
                         </a>
@@ -121,7 +123,8 @@
                         <a class="nav-link " href="{{ route('debtor.index') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-hand-holding-usd text-primary text-sm opacity-10"></i>
+                                <img src="{{ asset('assets/icon/user.svg') }}" alt="Hand Holding USD Icon"
+                                    class="text-primary text-sm opacity-10">
                             </div>
                             <span class="nav-link-text ms-1">ข้อมูลลูกหนี้</span>
                         </a>
@@ -177,7 +180,8 @@
                         <a class="nav-link active" href="{{ route('debtord.index') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-tasks text-primary text-sm opacity-10"></i>
+                                <img src="{{ asset('assets/icon/day.svg') }}" alt="Hand Holding USD Icon"
+                                    class="text-primary text-sm opacity-10">
                             </div>
                             <span class="nav-link-text ms-1">รายวัน</span>
                         </a>
@@ -187,7 +191,8 @@
                         <a class="nav-link " href="{{ route('debtord.index') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-tasks text-primary text-sm opacity-10"></i>
+                                <img src="{{ asset('assets/icon/day.svg') }}" alt="Hand Holding USD Icon"
+                                    class="text-primary text-sm opacity-10">
                             </div>
                             <span class="nav-link-text ms-1">รายวัน</span>
                         </a>
@@ -200,7 +205,8 @@
                         <a class="nav-link active" href="{{ route('debtorm.index') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-tasks text-primary text-sm opacity-10"></i>
+                                <img src="{{ asset('assets/icon/day.svg') }}" alt="Hand Holding USD Icon"
+                                    class="text-primary text-sm opacity-10">
                             </div>
                             <span class="nav-link-text ms-1">รายเดือน</span>
                         </a>
@@ -210,7 +216,8 @@
                         <a class="nav-link " href="{{ route('debtorm.index') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-tasks text-primary text-sm opacity-10"></i>
+                                <img src="{{ asset('assets/icon/day.svg') }}" alt="Hand Holding USD Icon"
+                                    class="text-primary text-sm opacity-10">
                             </div>
                             <span class="nav-link-text ms-1">รายเดือน</span>
                         </a>
@@ -223,7 +230,8 @@
                         <a class="nav-link active" href="{{ route('debtory.index') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-tasks text-primary text-sm opacity-10"></i>
+                                <img src="{{ asset('assets/icon/day.svg') }}" alt="Hand Holding USD Icon"
+                                    class="text-primary text-sm opacity-10">
                             </div>
                             <span class="nav-link-text ms-1">รายปี</span>
                         </a>
@@ -233,7 +241,8 @@
                         <a class="nav-link " href="{{ route('debtory.index') }}">
                             <div
                                 class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-tasks text-primary text-sm opacity-10"></i>
+                                <img src="{{ asset('assets/icon/day.svg') }}" alt="Hand Holding USD Icon"
+                                    class="text-primary text-sm opacity-10">
                             </div>
                             <span class="nav-link-text ms-1">รายปี</span>
                         </a>

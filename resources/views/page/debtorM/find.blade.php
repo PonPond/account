@@ -81,15 +81,17 @@
 
                                         </div>
                                         <div class="div" style="margin-left: 50%">
-                                            <a href="{{ url('/debtors-m/round/' . $item->id) }}"
-                                                class="fas fa-pencil-alt ms-auto text-dark cursor-pointer"
-                                                data-bs-toggle="tooltip" data-bs-placement="top" title="จัดการหนี้">
+                                            <a href="{{ url('/debtors-m/round/' . $item->id) }}" data-bs-toggle="tooltip"
+                                                data-bs-placement="top" title="จัดการหนี้">
+
+                                                <span
+                                                    class="badge badge-pill badge-lg bg-gradient-success">จัดการหนี้</span>
                                             </a>
 
                                             <a href="{{ url('/debtors-m/update/' . $item->id) }}"
-                                                class="fas fa-minus ms-auto text-dark cursor-pointer"
                                                 onclick="return confirm('ลบหรือไม่ ?')" data-bs-toggle="tooltip"
-                                                data-bs-placement="top" title="ลบข้อมูล">
+                                                data-bs-placement="top" title="ลบข้อมูล"> <span
+                                                    class="badge badge-pill badge-lg bg-gradient-danger">ลบข้อมูล</span>
                                             </a>
 
                                         </div>
