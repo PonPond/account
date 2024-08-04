@@ -235,12 +235,12 @@
                                 @if ($deb5->status == 'complete')
                                     <button type="button" class="btn btn-dark" data-bs-toggle="modal"
                                         data-bs-target="#exampleModalEdit{{ $item->id }}" disabled>
-                                        <i class="fas fa-edit"></i>
+                                        แก้ไข
                                     </button>
                                 @else
                                     <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
                                         data-bs-target="#exampleModalEdit{{ $item->id }}">
-                                        <i class="fas fa-edit"></i>
+                                        แก้ไข
                                     </button>
                                 @endif
 
@@ -352,14 +352,15 @@
                         <input type="hidden" class="form-control" id="exampleFormControlInput1" name="amount_d"
                             value="{{ $totalint }}">
 
-                        <input type="hidden" class="form-control" name="count_date_stuck" value="{{ $day}}">
-                        <input type="hidden" class="form-control" name="money_index" value="{{ $deb8->total_price - $sumAmount }}">
-                        <input type="hidden" class="form-control" name="interest_month" value="{{ $fullper}}">
+                        <input type="hidden" class="form-control" name="count_date_stuck" value="{{ $day }}">
+                        <input type="hidden" class="form-control" name="money_index"
+                            value="{{ $deb8->total_price - $sumAmount }}">
+                        <input type="hidden" class="form-control" name="interest_month" value="{{ $fullper }}">
                         <input type="hidden" class="form-control" name="interest_date" value="{{ $rday }}">
                         <input type="hidden" class="form-control" name="interest_total" value="{{ $totalint }}">
                         <button type="button" class="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
 
-                        
+
                         <button type="submit" class="btn bg-gradient-primary">Save
                             changes</button>
                     </form>
@@ -512,7 +513,7 @@
                     </div>
                     <div class="col-6">
 
-                
+
 
                         จำนวนเงินดอกเบี้ยคิดรายวัน: {{ number_format($rday, 2) }} บาท <br>
                         จำนวนเงินรวมของดอกเบี้ย: {{ number_format($totalint, 2) }} บาท
@@ -524,101 +525,99 @@
                     <div class="col-6">
 
                         @if ($deb8)
-                       
-                                <h4>จำนวนเงินต้น ติดค้างคงเหลือ: {{ $deb8->total_price - $sumAmount }} บาท
-                                    <span>
+                            <h4>จำนวนเงินต้น ติดค้างคงเหลือ: {{ $deb8->total_price - $sumAmount }} บาท
+                                <span>
 
-                                        <button type="button" class="btn bg-gradient-success" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModalDebtors">
-                                            เงินต้น
-                                        </button>
-                                    </span>
-                                    <div class="modal fade" id="exampleModalDebtors" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <button type="button" class="btn bg-gradient-success" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModalDebtors">
+                                        เงินต้น
+                                    </button>
+                                </span>
+                                <div class="modal fade" id="exampleModalDebtors" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
 
-                                        <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                                            <div class="modal-content">
+                                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                        <div class="modal-content">
 
-                                                <div class="modal-body">
+                                            <div class="modal-body">
 
-                                                    <div class="card mb-4">
+                                                <div class="card mb-4">
 
-                                                        <div class="card-header pb-0">
+                                                    <div class="card-header pb-0">
 
-                                                            <div class="row">
-                                                                <div class="col-12" style=" display: flex;">
-                                                                    <h5 class="mt-2" style="margin-right: 10px;">ยอดจ่ายเงินต้น</h5>
+                                                        <div class="row">
+                                                            <div class="col-12" style=" display: flex;">
+                                                                <h5 class="mt-2" style="margin-right: 10px;">
+                                                                    ยอดจ่ายเงินต้น</h5>
 
-                                                                    @if ($deb8)
-                                                                        <button type="button"
-                                                                            class="btn bg-gradient-primary"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#exampleModal1">
-                                                                            เพิ่มการจ่ายเงินต้น
-                                                                        </button>
-                                                                    @endif
-                                                                </div>
+                                                                @if ($deb8)
+                                                                    <button type="button" class="btn bg-gradient-primary"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#exampleModal1">
+                                                                        เพิ่มการจ่ายเงินต้น
+                                                                    </button>
+                                                                @endif
                                                             </div>
-
-                                                          
-
-                                                            <div class="card-body px-0 pt-0 pb-2">
-                                                                <div class="table-responsive p-0">
-                                                                    <table class="table align-items-center mb-0">
-                                                                        <thead>
-                                                                            <tr>
-
-                                                                                <th class="text-center">วันที่จ่าย</th>
-                                                                                <th class="text-center">ยอดเงิน</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            @foreach ($deb2 as $item)
-                                                                                <tr>
-                                                                                    <td class="text-center">
-                                                                                        <h6 class="mb-0 text-md">
-                                                                                            {{ $ThaiFormat->makeFormat2($item->created_at) }}
-                                                                                        </h6>
-                                                                                    </td>
-
-                                                                                    <td class="text-center">
-                                                                                        <h6 class="mb-0 text-md">
-                                                                                            {{ $item->amount }}</h6>
-                                                                                    </td>
-
-
-                                                                                </tr>
-                                                                            @endforeach
-                                                                        </tbody>
-                                                                    </table>
-
-                                                                    <h5 style="margin-left: 60%">รวม: {{ $totalsum }}
-                                                                        บาท</h5>
-                                                                </div>
-                                                            </div>
-
-
-
                                                         </div>
+
+
+
+                                                        <div class="card-body px-0 pt-0 pb-2">
+                                                            <div class="table-responsive p-0">
+                                                                <table class="table align-items-center mb-0">
+                                                                    <thead>
+                                                                        <tr>
+
+                                                                            <th class="text-center">วันที่จ่าย</th>
+                                                                            <th class="text-center">ยอดเงิน</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($deb2 as $item)
+                                                                            <tr>
+                                                                                <td class="text-center">
+                                                                                    <h6 class="mb-0 text-md">
+                                                                                        {{ $ThaiFormat->makeFormat2($item->created_at) }}
+                                                                                    </h6>
+                                                                                </td>
+
+                                                                                <td class="text-center">
+                                                                                    <h6 class="mb-0 text-md">
+                                                                                        {{ $item->amount }}</h6>
+                                                                                </td>
+
+
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+
+                                                                <h5 style="margin-left: 60%">รวม: {{ $totalsum }}
+                                                                    บาท</h5>
+                                                            </div>
+                                                        </div>
+
+
 
                                                     </div>
 
                                                 </div>
+
                                             </div>
                                         </div>
-
-
-                                        </td>
-
-
-                                        </tr>
-                                        </tbody>
-                                        </table>
-
-
                                     </div>
-                                </h4>
-                        
+
+
+                                    </td>
+
+
+                                    </tr>
+                                    </tbody>
+                                    </table>
+
+
+                                </div>
+                            </h4>
                         @else
                             <h4>ไม่พบข้อมูลเงินต้นติดค้าง</h4>
                         @endif
@@ -630,145 +629,145 @@
                     </div>
                     <div class="col-6">
 
-                        <h4>จำนวนดอกเบี้ยติดค้างคงเหลือ: {{ number_format($transitionsTotalSum + $totalint, 2) -$totalsumdd }}</h4>
+                        <h4>จำนวนดอกเบี้ยติดค้างคงเหลือ:
+                            {{ number_format($transitionsTotalSum + $totalint, 2) - $totalsumdd }}</h4>
 
-                            <span>
+                        <span>
 
-                                <button type="button" class="btn bg-gradient-danger" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModalDebtorsV2">
-                                    ดอกเบี้ย
-                                </button>
-                            </span>
-                            <div class="modal fade" id="exampleModalDebtorsV2" tabindex="-1" role="dialog"
-                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <button type="button" class="btn bg-gradient-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModalDebtorsV2">
+                                ดอกเบี้ย
+                            </button>
+                        </span>
+                        <div class="modal fade" id="exampleModalDebtorsV2" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
 
-                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                                    <div class="modal-content">
+                            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                <div class="modal-content">
 
-                                        <div class="modal-body">
+                                    <div class="modal-body">
 
-                                            <div class="card mb-4">
+                                        <div class="card mb-4">
 
-                                                <div class="card-header pb-0">
+                                            <div class="card-header pb-0">
 
-                                                    <div class="row">
-                                                        <div class="col-12" style=" display: flex;">
-                                                            <h5 class="mt-2" style="margin-right: 10px;">
-                                                                ยอดจ่ายดอกเบี้ย</h5>
-
-
-                                                            <button type="button" class="btn bg-gradient-info"
-                                                                data-bs-toggle="modal" data-bs-target="#exampleModalDD">
-                                                                เพิ่มการจ่ายดอกเบี้ย
-                                                            </button>
+                                                <div class="row">
+                                                    <div class="col-12" style=" display: flex;">
+                                                        <h5 class="mt-2" style="margin-right: 10px;">
+                                                            ยอดจ่ายดอกเบี้ย</h5>
 
 
-                                                        </div>
+                                                        <button type="button" class="btn bg-gradient-info"
+                                                            data-bs-toggle="modal" data-bs-target="#exampleModalDD">
+                                                            เพิ่มการจ่ายดอกเบี้ย
+                                                        </button>
+
+
                                                     </div>
+                                                </div>
 
-                                                    <div class="modal fade" id="exampleModalDD" tabindex="-1"
-                                                        role="dialog" aria-labelledby="exampleModalLabel"
-                                                        aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">
-                                                                        เพิ่มรายการดอกเบี้ย
-                                                                    </h5>
-                                                                    <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-
-                                                                    <form action="{{ route('dd_payment.store') }}"
-                                                                        method="POST" enctype="multipart/form-data">
-                                                                        @csrf
-                                                                        <div class="form-group">
-                                                                            <label
-                                                                                for="exampleFormControlInput1">ยอดเงิน</label>
-                                                                            <input type="text" class="form-control"
-                                                                                id="exampleFormControlInput1"
-                                                                                name="amount">
-                                                                        </div>
-
-
-                                                                        <input type="hidden" class="form-control"
-                                                                            name="debt_rounds_id"
-                                                                            value="{{ $deb5->id }}">
-                                                                        <input type="hidden" class="form-control"
-                                                                            name="debt_id" value="{{ $deb5->debt_id }}">
-
-
-                                                                        <button type="button"
-                                                                            class="btn bg-gradient-secondary"
-                                                                            data-bs-dismiss="modal">Close</button>
-                                                                        <button type="submit"
-                                                                            class="btn bg-gradient-primary">Save
-                                                                            changes</button>
-                                                                </div>
-
-                                                                </form>
-
-
+                                                <div class="modal fade" id="exampleModalDD" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                                    เพิ่มรายการดอกเบี้ย
+                                                                </h5>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
                                                             </div>
+                                                            <div class="modal-body">
+
+                                                                <form action="{{ route('dd_payment.store') }}"
+                                                                    method="POST" enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    <div class="form-group">
+                                                                        <label
+                                                                            for="exampleFormControlInput1">ยอดเงิน</label>
+                                                                        <input type="text" class="form-control"
+                                                                            id="exampleFormControlInput1" name="amount">
+                                                                    </div>
+
+
+                                                                    <input type="hidden" class="form-control"
+                                                                        name="debt_rounds_id"
+                                                                        value="{{ $deb5->id }}">
+                                                                    <input type="hidden" class="form-control"
+                                                                        name="debt_id" value="{{ $deb5->debt_id }}">
+
+
+                                                                    <button type="button"
+                                                                        class="btn bg-gradient-secondary"
+                                                                        data-bs-dismiss="modal">Close</button>
+                                                                    <button type="submit"
+                                                                        class="btn bg-gradient-primary">Save
+                                                                        changes</button>
+                                                            </div>
+
+                                                            </form>
+
+
                                                         </div>
                                                     </div>
-
                                                 </div>
-                                                <div class="card-body px-0 pt-0 pb-2">
-                                                    <div class="table-responsive p-0">
-                                                        <table class="table align-items-center mb-0">
-                                                            <thead>
-                                                                <tr>
-
-                                                                    <th class="text-center">วันที่จ่าย</th>
-                                                                    <th class="text-center">ยอดเงิน</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach ($dd_payment as $item)
-                                                                    <tr>
-                                                                        <td class="text-center">
-                                                                            <h6 class="mb-0 text-md">
-                                                                                {{ $ThaiFormat->makeFormat2($item->created_at) }}
-                                                                            </h6>
-                                                                        </td>
-
-                                                                        <td class="text-center">
-                                                                            <h6 class="mb-0 text-md">
-                                                                                {{ $item->amount }}</h6>
-                                                                        </td>
-
-
-                                                                    </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
-
-                                                        <h5 style="margin-left: 60%">รวม: {{ $totalsumdd }} บาท</h5>
-                                                    </div>
-                                                </div>
-
-
 
                                             </div>
+                                            <div class="card-body px-0 pt-0 pb-2">
+                                                <div class="table-responsive p-0">
+                                                    <table class="table align-items-center mb-0">
+                                                        <thead>
+                                                            <tr>
+
+                                                                <th class="text-center">วันที่จ่าย</th>
+                                                                <th class="text-center">ยอดเงิน</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($dd_payment as $item)
+                                                                <tr>
+                                                                    <td class="text-center">
+                                                                        <h6 class="mb-0 text-md">
+                                                                            {{ $ThaiFormat->makeFormat2($item->created_at) }}
+                                                                        </h6>
+                                                                    </td>
+
+                                                                    <td class="text-center">
+                                                                        <h6 class="mb-0 text-md">
+                                                                            {{ $item->amount }}</h6>
+                                                                    </td>
+
+
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+
+                                                    <h5 style="margin-left: 60%">รวม: {{ $totalsumdd }} บาท</h5>
+                                                </div>
+                                            </div>
+
+
 
                                         </div>
+
                                     </div>
                                 </div>
-
-
-                                </td>
-
-
-                                </tr>
-                                </tbody>
-                                </table>
-
-
                             </div>
+
+
+                            </td>
+
+
+                            </tr>
+                            </tbody>
+                            </table>
+
+
+                        </div>
                         </h4>
 
 
