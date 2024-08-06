@@ -502,7 +502,75 @@
                     </div>
                 @endif
 
+                <button type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#exampleModalDebtorsDD">ประวัติ</button>
 
+                <div class="modal fade" id="exampleModalDebtorsDD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="card mb-4">
+                                    <div class="card-header pb-0">
+                                        <div class="row">
+                                            <div class="col-12" style="display: flex;">
+                                                <h5 class="mt-2" style="margin-right: 10px;">ประวัติดอกเบี้ย</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body px-0 pt-0 pb-2">
+                                        <div class="table-responsive p-0">
+                                            <table class="table align-items-center mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">จำนวนเงินต้น</th>
+                                                        <th class="text-center">จำนวนวันที่ติดค้าง</th>
+                                                        <th class="text-center">จำนวนเงินรวมของดอกเบี้ย</th>
+                                                        <th class="text-center">วันที่จ่ายเงินต้น</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($transitions as $item)
+                                                        <tr>
+                                                        <td class="text-center">
+                                                                <h6 class="mb-0 text-md">
+                                                                    {{ $item->money_index }}
+                                                                </h6>
+                                                            </td>
+
+                                                            <td class="text-center">
+                                                                <h6 class="mb-0 text-md">
+                                                                        {{ $item->count_date_stuck }}
+                                                                </h6>
+                                                            </td>
+
+                                                            <td class="text-center">
+                                                                <h6 class="mb-0 text-md">
+                                                                        {{ $item->interest_total }}
+                                                                </h6>
+                                                            </td>
+                                                            
+                                                            <td class="text-center">
+                                                                <h6 class="mb-0 text-md">
+                                                                    {{ $ThaiFormat->makeFormat2($item->created_at) }}
+                                                                </h6>
+                                                            </td>
+                                                           
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                            <h5 style="margin-left: 60%">รวม: {{ $transitionsTotalSum }} บาท</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>           
+              
+                            
+                     
+
+                
                 <br>
                 <div class="row">
                     <div class="col-6">
@@ -630,15 +698,20 @@
                     <div class="col-6">
 
                         <h4>จำนวนดอกเบี้ยติดค้างคงเหลือ:
-                            {{ number_format($transitionsTotalSum + $totalint, 2) - $totalsumdd }}</h4>
+                        @php
+                        $sum = $transitionsTotalSum + $totalint - $totalsumdd;
+                        @endphp
+
+                        {{ number_format($sum, 2) }}
+                        </h4>
 
                         <span>
-
                             <button type="button" class="btn bg-gradient-danger" data-bs-toggle="modal"
                                 data-bs-target="#exampleModalDebtorsV2">
                                 ดอกเบี้ย
                             </button>
                         </span>
+
                         <div class="modal fade" id="exampleModalDebtorsV2" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
 
