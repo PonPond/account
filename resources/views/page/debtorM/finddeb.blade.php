@@ -332,7 +332,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มการชำระนะ</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">เพิ่มการชำระ</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -352,9 +352,14 @@
                         <input type="hidden" class="form-control" id="exampleFormControlInput1" name="amount_d"
                             value="{{ $totalint }}">
 
+
                         <input type="hidden" class="form-control" name="count_date_stuck" value="{{ $day }}">
-                        <input type="hidden" class="form-control" name="money_index"
-                            value="{{ $deb8->total_price - $sumAmount }}">
+
+                        @if ($deb8)
+                            <input type="hidden" class="form-control" name="money_index"
+                                value="{{ $deb8->total_price - $sumAmount }}">
+                        @endif
+
                         <input type="hidden" class="form-control" name="interest_month" value="{{ $fullper }}">
                         <input type="hidden" class="form-control" name="interest_date" value="{{ $rday }}">
                         <input type="hidden" class="form-control" name="interest_total" value="{{ $totalint }}">
@@ -502,9 +507,11 @@
                     </div>
                 @endif
 
-                <button type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#exampleModalDebtorsDD">ประวัติ</button>
+                <button type="button" class="btn bg-gradient-warning" data-bs-toggle="modal"
+                    data-bs-target="#exampleModalDebtorsDD">ประวัติ</button>
 
-                <div class="modal fade" id="exampleModalDebtorsDD" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModalDebtorsDD" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
                         <div class="modal-content">
                             <div class="modal-body">
@@ -530,7 +537,7 @@
                                                 <tbody>
                                                     @foreach ($transitions as $item)
                                                         <tr>
-                                                        <td class="text-center">
+                                                            <td class="text-center">
                                                                 <h6 class="mb-0 text-md">
                                                                     {{ $item->money_index }}
                                                                 </h6>
@@ -538,22 +545,22 @@
 
                                                             <td class="text-center">
                                                                 <h6 class="mb-0 text-md">
-                                                                        {{ $item->count_date_stuck }}
+                                                                    {{ $item->count_date_stuck }}
                                                                 </h6>
                                                             </td>
 
                                                             <td class="text-center">
                                                                 <h6 class="mb-0 text-md">
-                                                                        {{ $item->interest_total }}
+                                                                    {{ $item->interest_total }}
                                                                 </h6>
                                                             </td>
-                                                            
+
                                                             <td class="text-center">
                                                                 <h6 class="mb-0 text-md">
                                                                     {{ $ThaiFormat->makeFormat2($item->created_at) }}
                                                                 </h6>
                                                             </td>
-                                                           
+
                                                         </tr>
                                                     @endforeach
                                                 </tbody>
@@ -565,12 +572,12 @@
                             </div>
                         </div>
                     </div>
-                </div>           
-              
-                            
-                     
+                </div>
 
-                
+
+
+
+
                 <br>
                 <div class="row">
                     <div class="col-6">
@@ -698,149 +705,150 @@
                     <div class="col-6">
 
                         <h4>จำนวนดอกเบี้ยติดค้างคงเหลือ:
-                        @php
-                        $sum = $transitionsTotalSum + $totalint - $totalsumdd;
-                        @endphp
+                            @php
+                                $sum = $transitionsTotalSum + $totalint - $totalsumdd;
+                            @endphp
 
-                        {{ number_format($sum, 2) }}
-                        </h4>
-
-                        <span>
-                            <button type="button" class="btn bg-gradient-danger" data-bs-toggle="modal"
-                                data-bs-target="#exampleModalDebtorsV2">
-                                ดอกเบี้ย
-                            </button>
-                        </span>
-
-                        <div class="modal fade" id="exampleModalDebtorsV2" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-                            <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
-                                <div class="modal-content">
-
-                                    <div class="modal-body">
-
-                                        <div class="card mb-4">
-
-                                            <div class="card-header pb-0">
-
-                                                <div class="row">
-                                                    <div class="col-12" style=" display: flex;">
-                                                        <h5 class="mt-2" style="margin-right: 10px;">
-                                                            ยอดจ่ายดอกเบี้ย</h5>
+                            {{ number_format($sum, 2) }}
 
 
-                                                        <button type="button" class="btn bg-gradient-info"
-                                                            data-bs-toggle="modal" data-bs-target="#exampleModalDD">
-                                                            เพิ่มการจ่ายดอกเบี้ย
-                                                        </button>
+                            <span>
+                                <button type="button" class="btn bg-gradient-danger" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModalDebtorsV2">
+                                    ดอกเบี้ย
+                                </button>
+                            </span>
+
+                            <div class="modal fade" id="exampleModalDebtorsV2" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                                <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+                                    <div class="modal-content">
+
+                                        <div class="modal-body">
+
+                                            <div class="card mb-4">
+
+                                                <div class="card-header pb-0">
+
+                                                    <div class="row">
+                                                        <div class="col-12" style=" display: flex;">
+                                                            <h5 class="mt-2" style="margin-right: 10px;">
+                                                                ยอดจ่ายดอกเบี้ย</h5>
 
 
-                                                    </div>
-                                                </div>
-
-                                                <div class="modal fade" id="exampleModalDD" tabindex="-1"
-                                                    role="dialog" aria-labelledby="exampleModalLabel"
-                                                    aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">
-                                                                    เพิ่มรายการดอกเบี้ย
-                                                                </h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-
-                                                                <form action="{{ route('dd_payment.store') }}"
-                                                                    method="POST" enctype="multipart/form-data">
-                                                                    @csrf
-                                                                    <div class="form-group">
-                                                                        <label
-                                                                            for="exampleFormControlInput1">ยอดเงิน</label>
-                                                                        <input type="text" class="form-control"
-                                                                            id="exampleFormControlInput1" name="amount">
-                                                                    </div>
-
-
-                                                                    <input type="hidden" class="form-control"
-                                                                        name="debt_rounds_id"
-                                                                        value="{{ $deb5->id }}">
-                                                                    <input type="hidden" class="form-control"
-                                                                        name="debt_id" value="{{ $deb5->debt_id }}">
-
-
-                                                                    <button type="button"
-                                                                        class="btn bg-gradient-secondary"
-                                                                        data-bs-dismiss="modal">Close</button>
-                                                                    <button type="submit"
-                                                                        class="btn bg-gradient-primary">Save
-                                                                        changes</button>
-                                                            </div>
-
-                                                            </form>
+                                                            <button type="button" class="btn bg-gradient-info"
+                                                                data-bs-toggle="modal" data-bs-target="#exampleModalDD">
+                                                                เพิ่มการจ่ายดอกเบี้ย
+                                                            </button>
 
 
                                                         </div>
                                                     </div>
+
+                                                    <div class="modal fade" id="exampleModalDD" tabindex="-1"
+                                                        role="dialog" aria-labelledby="exampleModalLabel"
+                                                        aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">
+                                                                        เพิ่มรายการดอกเบี้ย
+                                                                    </h5>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                    <form action="{{ route('dd_payment.store') }}"
+                                                                        method="POST" enctype="multipart/form-data">
+                                                                        @csrf
+                                                                        <div class="form-group">
+                                                                            <label
+                                                                                for="exampleFormControlInput1">ยอดเงิน</label>
+                                                                            <input type="text" class="form-control"
+                                                                                id="exampleFormControlInput1"
+                                                                                name="amount">
+                                                                        </div>
+
+
+                                                                        <input type="hidden" class="form-control"
+                                                                            name="debt_rounds_id"
+                                                                            value="{{ $deb5->id }}">
+                                                                        <input type="hidden" class="form-control"
+                                                                            name="debt_id" value="{{ $deb5->debt_id }}">
+
+
+                                                                        <button type="button"
+                                                                            class="btn bg-gradient-secondary"
+                                                                            data-bs-dismiss="modal">Close</button>
+                                                                        <button type="submit"
+                                                                            class="btn bg-gradient-primary">Save
+                                                                            changes</button>
+                                                                </div>
+
+                                                                </form>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
-
-                                            </div>
-                                            <div class="card-body px-0 pt-0 pb-2">
-                                                <div class="table-responsive p-0">
-                                                    <table class="table align-items-center mb-0">
-                                                        <thead>
-                                                            <tr>
-
-                                                                <th class="text-center">วันที่จ่าย</th>
-                                                                <th class="text-center">ยอดเงิน</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @foreach ($dd_payment as $item)
+                                                <div class="card-body px-0 pt-0 pb-2">
+                                                    <div class="table-responsive p-0">
+                                                        <table class="table align-items-center mb-0">
+                                                            <thead>
                                                                 <tr>
-                                                                    <td class="text-center">
-                                                                        <h6 class="mb-0 text-md">
-                                                                            {{ $ThaiFormat->makeFormat2($item->created_at) }}
-                                                                        </h6>
-                                                                    </td>
 
-                                                                    <td class="text-center">
-                                                                        <h6 class="mb-0 text-md">
-                                                                            {{ $item->amount }}</h6>
-                                                                    </td>
-
-
+                                                                    <th class="text-center">วันที่จ่าย</th>
+                                                                    <th class="text-center">ยอดเงิน</th>
                                                                 </tr>
-                                                            @endforeach
-                                                        </tbody>
-                                                    </table>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($dd_payment as $item)
+                                                                    <tr>
+                                                                        <td class="text-center">
+                                                                            <h6 class="mb-0 text-md">
+                                                                                {{ $ThaiFormat->makeFormat2($item->created_at) }}
+                                                                            </h6>
+                                                                        </td>
 
-                                                    <h5 style="margin-left: 60%">รวม: {{ $totalsumdd }} บาท</h5>
+                                                                        <td class="text-center">
+                                                                            <h6 class="mb-0 text-md">
+                                                                                {{ $item->amount }}</h6>
+                                                                        </td>
+
+
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+
+                                                        <h5 style="margin-left: 60%">รวม: {{ $totalsumdd }} บาท</h5>
+                                                    </div>
                                                 </div>
+
+
+
                                             </div>
-
-
 
                                         </div>
-
                                     </div>
                                 </div>
+
+
+                                </td>
+
+
+                                </tr>
+                                </tbody>
+                                </table>
+
+
                             </div>
-
-
-                            </td>
-
-
-                            </tr>
-                            </tbody>
-                            </table>
-
-
-                        </div>
                         </h4>
 
 
@@ -892,7 +900,7 @@
                 </div>
 
             </div>
-        
+
         </div>
     </div>
 @endsection
