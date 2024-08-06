@@ -892,38 +892,7 @@
                 </div>
 
             </div>
-            <div class="card-body px-0 pt-0 pb-2">
-                <div class="table-responsive p-0">
-                    <table class="table align-items-center mb-0">
-                        <thead>
-                            <tr>
-
-                                <th class="text-center">วันที่จ่าย</th>
-                                <th class="text-center">จำนวนเงิน</th>
-                                <th class="text-center">ดอกเบี้ย</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($deb7 as $item)
-                                <tr>
-                                    <td class="text-center">
-                                        <h6 class="mb-0 text-md">{{ $ThaiFormat->makeFormat2($item->created_at) }}
-                                        </h6>
-                                    </td>
-
-                                    <td class="text-center">
-                                        <h6 class="mb-0 text-md">{{ $item->amount }}</h6>
-                                    </td>
-
-                                    <td class="text-center">
-                                        <h6 class="mb-0 text-md">{{ $item->amount_d }}</h6>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        
         </div>
     </div>
 @endsection
