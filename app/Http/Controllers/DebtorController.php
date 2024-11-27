@@ -51,12 +51,17 @@ class DebtorController extends Controller
             ->orderBy('end_date', 'asc') 
             ->take(10)
             ->get();
+    $suminterest = DB::table('dd_payments')
+            ->sum('amount');
+    $sumpayment = DB::table('payments')
+            ->sum('amount');
+
 
     
 
 
     
-    return view('dashboard', compact('daily','monthly','yearly','totalDebtsDay','totalDebtsMonth','totalDebtsYear','totalDebts','data','orders','debtors'));
+    return view('dashboard', compact('daily','monthly','yearly','totalDebtsDay','totalDebtsMonth','totalDebtsYear','totalDebts','data','orders','debtors','suminterest','sumpayment'));
 }
 
 
